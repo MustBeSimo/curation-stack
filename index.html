@@ -1,0 +1,1930 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Curation Stack | Legibility Engineering</title>
+  <meta name="description" content="Quality Infrastructure for User-Generated Software. When everyone can generate apps, the platform that wins solves curation, not creation." />
+  <meta name="author" content="Simone Leonelli" />
+  <meta property="og:title" content="The Curation Stack | Quality Infrastructure for User-Generated Software" />
+  <meta property="og:description" content="Generation tools are converging. Curation is the moat. What luxury brands, YouTube, and Michelin teach us about quality at platform scale." />
+  <meta property="og:type" content="article" />
+  <link rel="canonical" href="https://mustbesimo.github.io/curation-stack/" />
+  <meta property="og:url" content="https://mustbesimo.github.io/curation-stack/" />
+  <meta property="og:image" content="https://mustbesimo.github.io/curation-stack/og.jpg" />
+  <meta property="og:site_name" content="Legibility Engineering" />
+  <meta property="og:locale" content="en_US" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="The Curation Stack | Quality Infrastructure for User-Generated Software" />
+  <meta name="twitter:description" content="Generation tools are converging. Curation is the moat. What luxury brands, YouTube, and Michelin teach us about quality at platform scale." />
+  <meta name="twitter:image" content="https://mustbesimo.github.io/curation-stack/og.jpg" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  
+  
+
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --surface: #111111;
+      --surface-elevated: #1a1a1a;
+      --border: #222222;
+      --border-accent: #2a2a2a;
+      --text-primary: #e8e8e8;
+      --text-secondary: #999999;
+      --text-muted: #777777;
+      --accent: #c4a265;
+      --accent-dim: #8a7245;
+      --accent-bright: #d4b275;
+      --red: #c45555;
+      --green: #55c465;
+      --blue: #5588cc;
+      --section-spacing: 120px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      font-size: 16px;
+      background: var(--bg);
+      color: var(--text-primary);
+      overflow-x: hidden;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text-primary);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* Scroll Progress Bar */
+    .progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent-dim), var(--accent), var(--accent-bright));
+      z-index: 9999;
+      width: 0%;
+      box-shadow: 0 0 10px rgba(196, 162, 101, 0.5);
+    }
+
+    /* Noise Texture Overlay */
+    .noise-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 9998;
+      opacity: 0.03;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    }
+
+    /* ==================== HERO ==================== */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 80px 40px;
+      max-width: 1000px;
+      margin: 0 auto;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-bg-shapes {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .hero-shape {
+      position: absolute;
+      border: 1px solid var(--border-accent);
+      opacity: 0.3;
+    }
+
+    .hero-shape-1 {
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      top: 10%;
+      right: -100px;
+      animation: float 20s infinite ease-in-out;
+    }
+
+    .hero-shape-2 {
+      width: 200px;
+      height: 200px;
+      bottom: 20%;
+      left: -50px;
+      transform: rotate(45deg);
+      animation: float 25s infinite ease-in-out reverse;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      50% { transform: translate(-20px, 30px) rotate(5deg); }
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--accent-dim);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 40px;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .hero h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      line-height: 1.1;
+      margin-bottom: 32px;
+      color: var(--text-primary);
+      overflow: hidden;
+    }
+
+    .hero h1 .line {
+      display: block;
+      overflow: hidden;
+    }
+
+    .hero h1 .line-inner {
+      display: block;
+      transform: translateY(100%);
+      opacity: 0;
+    }
+
+    .hero h1 .highlight {
+      color: var(--accent);
+      position: relative;
+      display: inline-block;
+    }
+
+    .hero h1 .highlight::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 30%;
+      background: linear-gradient(120deg, rgba(196, 162, 101, 0.2), rgba(196, 162, 101, 0));
+      z-index: -1;
+      transform: scaleX(0);
+      transform-origin: left;
+      animation: highlightExpand 1s ease-out 1.5s forwards;
+    }
+
+    @keyframes highlightExpand {
+      to { transform: scaleX(1); }
+    }
+
+    .hero-subtitle {
+      font-size: 1.25rem;
+      color: var(--text-secondary);
+      max-width: 100%;
+      line-height: 1.8;
+      margin-bottom: 48px;
+      opacity: 0;
+      filter: blur(10px);
+      transform: translateY(20px);
+    }
+
+    .hero-author {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      margin-bottom: 8px;
+      line-height: 1.6;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .hero-author strong {
+      color: var(--text-primary);
+    }
+
+    .hero-author a {
+      color: var(--accent);
+      text-decoration: none;
+      position: relative;
+      transition: color 0.3s;
+    }
+
+    .hero-author a::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: var(--accent);
+      transition: width 0.3s ease;
+    }
+
+    .hero-author a:hover::after {
+      width: 100%;
+    }
+
+    .companion-note {
+      margin-top: 32px;
+      padding: 20px 24px;
+      border-left: 2px solid var(--accent-dim);
+      background: var(--surface);
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      opacity: 0;
+      transform: translateX(-20px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .companion-note::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(196, 162, 101, 0.05), transparent);
+      transform: translateX(-100%);
+      animation: shimmer 3s infinite;
+    }
+
+    @keyframes shimmer {
+      100% { transform: translateX(100%); }
+    }
+
+    .companion-note a {
+      color: var(--accent);
+      text-decoration: none;
+      border-bottom: 1px dotted var(--accent-dim);
+      transition: all 0.3s;
+    }
+
+    .companion-note a:hover {
+      border-bottom-style: solid;
+      color: var(--accent-bright);
+    }
+
+    .hero-meta {
+      display: flex;
+      gap: 32px;
+      flex-wrap: wrap;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+      margin-top: 32px;
+      opacity: 0;
+    }
+
+    .hero-meta span {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: color 0.3s;
+    }
+
+    .hero-meta span:hover {
+      color: var(--accent);
+    }
+
+    /* ==================== SECTIONS ==================== */
+    .section {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 40px var(--section-spacing);
+      position: relative;
+      opacity: 0;
+      transform: translateY(40px);
+    }
+
+    .section-number {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.2rem;
+      color: var(--accent-dim);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      display: inline-block;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .section-number::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background: var(--accent-dim);
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform 0.6s ease;
+    }
+
+    .section.visible .section-number::after {
+      transform: scaleX(1);
+      transform-origin: left;
+    }
+
+    .section h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      line-height: 1.2;
+      margin-bottom: 32px;
+      color: var(--text-primary);
+    }
+
+    .section h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 500;
+      font-size: 1.25rem;
+      margin-top: 48px;
+      margin-bottom: 20px;
+      color: var(--text-primary);
+    }
+
+    .section p {
+      color: var(--text-secondary);
+      margin-bottom: 24px;
+      max-width: 100%;
+      font-size: 1.05rem;
+      line-height: 1.8;
+    }
+
+    .section p strong {
+      color: var(--text-primary);
+      font-weight: 500;
+    }
+
+    /* ==================== THESIS BOX ==================== */
+    .thesis-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 40px;
+      margin: 48px 0;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s ease, border-color 0.3s ease;
+    }
+
+    .thesis-box:hover {
+      transform: scale(1.02);
+      border-color: var(--accent-dim);
+    }
+
+    .thesis-box::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: linear-gradient(180deg, var(--accent), var(--accent-dim));
+      transform: scaleY(0);
+      transform-origin: top;
+      transition: transform 0.6s ease;
+    }
+
+    .thesis-box.visible::before {
+      transform: scaleY(1);
+    }
+
+    .thesis-box p {
+      font-size: 1.15rem;
+      color: var(--text-primary);
+      line-height: 1.8;
+      max-width: none;
+      margin: 0;
+    }
+
+    /* ==================== TABLES ==================== */
+    .comp-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 48px 0;
+      font-size: 0.9rem;
+    }
+
+    .comp-table th {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      text-align: left;
+      padding: 16px;
+      border-bottom: 1px solid var(--border);
+      font-weight: 500;
+    }
+
+    .comp-table td {
+      padding: 20px 16px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-secondary);
+      vertical-align: top;
+      transition: all 0.3s ease;
+    }
+
+    .comp-table tr {
+      transition: all 0.3s ease;
+    }
+
+    .comp-table tbody tr:hover {
+      background: var(--surface-elevated);
+      transform: translateX(10px);
+    }
+
+    .comp-table tbody tr:hover td {
+      color: var(--text-primary);
+    }
+
+    .comp-table td:first-child {
+      color: var(--text-primary);
+      font-weight: 500;
+      white-space: nowrap;
+      font-family: 'Space Grotesk', sans-serif;
+    }
+
+    .comp-table a {
+      color: var(--accent);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .comp-table a:hover {
+      color: var(--accent-bright);
+    }
+
+    /* ==================== DIAGRAMS ==================== */
+    .diagram {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 48px 40px;
+      margin: 48px 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .diagram::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(196, 162, 101, 0.03) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .diagram-title {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent-dim);
+      margin-bottom: 32px;
+    }
+
+    .flow-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: nowrap;
+      margin-bottom: 20px;
+      transition: all 0.3s ease;
+    }
+
+    /* Fixed-width tier labels so stars + text align across rows */
+    .flow-row .flow-box:first-child {
+      flex: 0 0 190px; /* same width for all tier labels */
+      white-space: nowrap; /* keep stars and label on one line */
+    }
+
+    /* Let the description box take the remaining space */
+    .flow-row .flow-box:nth-child(3) {
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+
+    .flow-box {
+      background: var(--surface-elevated);
+      border: 1px solid var(--border-accent);
+      padding: 12px 20px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .flow-box::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(196, 162, 101, 0.1), transparent);
+      transition: left 0.5s;
+    }
+
+    .flow-box:hover::before {
+      left: 100%;
+    }
+
+    .flow-box:hover {
+      border-color: var(--accent-dim);
+      color: var(--text-primary);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+
+    .flow-box.accent {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: rgba(196, 162, 101, 0.05);
+    }
+
+    .flow-arrow {
+      color: var(--accent-dim);
+      font-size: 1.2rem;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.5; }
+      50% { opacity: 1; }
+    }
+
+    /* ==================== TIER CARDS ==================== */
+    .tier-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      margin: 48px 0;
+      perspective: 1000px;
+    }
+
+    .tier-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 32px;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .tier-card:hover {
+      transform: translateY(-8px);
+      border-color: var(--accent-dim);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    }
+
+    .tier-card .tier-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent-dim);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .tier-card .tier-label::before {
+      content: '';
+      width: 8px;
+      height: 8px;
+      background: var(--accent-dim);
+      border-radius: 50%;
+    }
+
+    .tier-card h4 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 500;
+      font-size: 1.1rem;
+      margin-bottom: 16px;
+      color: var(--text-primary);
+    }
+
+    .tier-card p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 0;
+      line-height: 1.7;
+    }
+
+    /* ==================== CASE STUDIES ==================== */
+    .case-study {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 40px;
+      margin: 48px 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .case-study::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 100px;
+      height: 100px;
+      background: radial-gradient(circle, rgba(196, 162, 101, 0.1) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .case-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 4px;
+      background: rgba(196, 85, 85, 0.1);
+      color: var(--red);
+      border: 1px solid rgba(196, 85, 85, 0.2);
+    }
+
+    .case-label.success {
+      background: rgba(85, 196, 101, 0.1);
+      color: var(--green);
+      border-color: rgba(85, 196, 101, 0.2);
+    }
+
+    .case-label.neutral {
+      background: rgba(85, 136, 204, 0.1);
+      color: var(--blue);
+      border-color: rgba(85, 136, 204, 0.2);
+    }
+
+    .case-study h4 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 500;
+      font-size: 1.2rem;
+      margin-bottom: 16px;
+      color: var(--text-primary);
+    }
+
+    .case-study p {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      max-width: none;
+      line-height: 1.8;
+    }
+
+    /* ==================== CODE BLOCKS ==================== */
+    .code-block {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 32px;
+      margin: 32px 0;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      line-height: 2;
+      color: var(--text-secondary);
+      overflow-x: auto;
+      position: relative;
+    }
+
+    .code-block::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), transparent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.6s ease;
+    }
+
+    .code-block.visible::before {
+      transform: scaleX(1);
+    }
+
+    .code-block .comment {
+      color: var(--text-muted);
+      font-style: italic;
+    }
+
+    .code-block .key {
+      color: var(--accent);
+    }
+
+    .code-block .val {
+      color: var(--green);
+    }
+
+    /* ==================== SPLIT CARDS ==================== */
+    .split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin: 48px 0;
+    }
+
+    @media (max-width: 768px) {
+      .split { grid-template-columns: 1fr; }
+    }
+
+    .split-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 32px;
+      transition: all 0.4s ease;
+    }
+
+    .split-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+
+    .split-card.danger {
+      border-color: rgba(196, 85, 85, 0.3);
+      background: linear-gradient(135deg, var(--surface) 0%, rgba(196, 85, 85, 0.05) 100%);
+    }
+
+    .split-card.safe {
+      border-color: rgba(85, 196, 101, 0.3);
+      background: linear-gradient(135deg, var(--surface) 0%, rgba(85, 196, 101, 0.05) 100%);
+    }
+
+    .split-card h4 {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    .split-card.danger h4 { color: var(--red); }
+    .split-card.safe h4 { color: var(--green); }
+
+    .split-card p {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      max-width: none;
+      margin: 0;
+    }
+
+    /* ==================== PREDICTION BOX ==================== */
+    .prediction {
+      background: var(--surface);
+      border: 1px solid var(--accent-dim);
+      padding: 40px;
+      margin: 48px 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .prediction::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-dim), transparent);
+      animation: shimmer 3s infinite;
+    }
+
+    .prediction-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .prediction-label::before {
+      content: '◆';
+      color: var(--accent);
+      animation: rotate 4s linear infinite;
+      display: inline-block;
+    }
+
+    @keyframes rotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .prediction p {
+      font-size: 1.1rem;
+      color: var(--text-primary);
+      max-width: none;
+      line-height: 1.8;
+      margin: 0;
+    }
+
+    /* ==================== LISTS ==================== */
+    .styled-list {
+      margin: 32px 0;
+      padding-left: 0;
+      list-style: none;
+    }
+
+    .styled-list li {
+      padding: 16px 0 16px 32px;
+      position: relative;
+      color: var(--text-secondary);
+      font-size: 1rem;
+      line-height: 1.8;
+      border-left: 2px solid transparent;
+      margin-left: 0;
+      transition: all 0.3s ease;
+    }
+
+    .styled-list li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--accent-dim);
+      transition: all 0.3s ease;
+    }
+
+    .styled-list li:hover {
+      border-left-color: var(--accent-dim);
+      padding-left: 40px;
+      color: var(--text-primary);
+    }
+
+    .styled-list li:hover::before {
+      color: var(--accent);
+      transform: translateX(5px);
+    }
+
+    /* ==================== FOOTER ==================== */
+    .footer {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 80px 40px 100px;
+      border-top: 1px solid var(--border);
+      text-align: center;
+      position: relative;
+    }
+
+    .footer::before {
+      content: '';
+      position: absolute;
+      top: -1px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 200px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    }
+
+    .footer p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+      line-height: 1.8;
+    }
+
+    .footer a {
+      color: var(--accent);
+      text-decoration: none;
+      position: relative;
+      transition: color 0.3s;
+    }
+
+    .footer a::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: var(--accent);
+      transition: width 0.3s ease;
+    }
+
+    .footer a:hover::after {
+      width: 100%;
+    }
+
+    /* ==================== PARALLAX ELEMENTS ==================== */
+    .parallax-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+      opacity: 0.4;
+    }
+
+    .parallax-layer {
+      position: absolute;
+      width: 100%;
+      height: 120%;
+      background: radial-gradient(circle at 20% 50%, rgba(196, 162, 101, 0.03) 0%, transparent 50%),
+                  radial-gradient(circle at 80% 80%, rgba(196, 162, 101, 0.02) 0%, transparent 40%);
+    }
+
+    /* ==================== NAVIGATION DOTS ==================== */
+    .nav-dots {
+      position: fixed;
+      right: 40px;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .nav-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--border-accent);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .nav-dot::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      width: 20px;
+      height: 20px;
+      border: 1px solid var(--accent);
+      border-radius: 50%;
+      transition: transform 0.3s ease;
+    }
+
+    .nav-dot:hover, .nav-dot.active {
+      background: var(--accent);
+    }
+
+    .nav-dot.active::after {
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    @media (max-width: 1024px) {
+      .nav-dots { display: none; }
+    }
+
+    /* ==================== RESPONSIVE ==================== */
+    @media (max-width: 768px) {
+      .hero, .section {
+        padding-left: 24px;
+        padding-right: 24px;
+      }
+
+      .hero {
+        padding-top: 60px;
+        min-height: auto;
+        padding-bottom: 60px;
+      }
+
+      :root {
+        --section-spacing: 80px;
+      }
+
+      .thesis-box, .diagram, .case-study, .prediction {
+        padding: 24px;
+      }
+
+      .tier-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .code-block {
+        padding: 20px;
+        font-size: 0.75rem;
+      }
+    }
+
+    /* Reduced motion support */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+    /* Inference/Hypothesis badges */
+    .inference-badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--accent-dim);
+      letter-spacing: 0.05em;
+      opacity: 0.8;
+      margin-left: 4px;
+    }
+
+    /* Focus styles for accessibility */
+    a:focus-visible, .nav-dot:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+      border-radius: 2px;
+    }
+
+    .nav-dot:focus-visible {
+      border-radius: 50%;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Progress Bar -->
+  <div class="progress-bar" id="progressBar"></div>
+
+  <!-- Noise Overlay -->
+  <div class="noise-overlay"></div>
+
+  <!-- Parallax Background -->
+  <div class="parallax-bg">
+    <div class="parallax-layer" data-speed="0.5"></div>
+  </div>
+
+  <!-- Navigation Dots -->
+  <nav class="nav-dots" id="navDots" aria-label="Section navigation"></nav>
+
+  <!-- ==================== HERO ==================== -->
+  <header class="hero" id="hero">
+    <div class="hero-bg-shapes">
+      <div class="hero-shape hero-shape-1"></div>
+      <div class="hero-shape hero-shape-2"></div>
+    </div>
+
+    <div class="hero-content">
+      <div class="hero-label">Legibility Engineering 002</div>
+
+      <h1>
+        <span class="line"><span class="line-inner">Generation Tools Are <span class="highlight">Converging.</span></span></span>
+        <span class="line"><span class="line-inner">Curation Is the <span class="highlight">Moat.</span></span></span>
+      </h1>
+
+      <p class="hero-subtitle">
+        When anyone can generate software, discovery collapses. The platform that wins makes quality legible. What luxury brands, YouTube, and Michelin teach us about quality infrastructure for user-generated software.
+      </p>
+
+      <div class="hero-author">
+        <strong>Simone Leonelli</strong> | AI Systems Architect. 16 years building quality systems for luxury brands (Fendi, Bentley, Porsche). Guest Lecturer, UNSW (Agentic AI).<br/>
+        Read: <a href="https://mustbesimo.github.io/tasteinfra/">The Taste Layer</a> (enterprise evaluation infrastructure).
+      </div>
+
+      <div class="companion-note">
+        This is the platform-layer companion to <a href="https://mustbesimo.github.io/tasteinfra/">The Taste Layer</a>. Where that manifesto addresses quality gates within an enterprise, this one addresses quality infrastructure across a marketplace of user-generated software. Same core thesis, different altitude.
+      </div>
+
+      <div class="hero-meta">
+        <span>February 2026</span>
+        <span>v1.0</span>
+        <span>~15 min read</span>
+      </div>
+    </div>
+  </header>
+
+  <main role="main">
+
+  <!-- ==================== 01 | THE CONVERGENCE ==================== -->
+  <section class="section" id="section-01">
+    <div class="section-number">01 | The Convergence</div>
+    <h2>Every Generation Tool Arrives at the Same Problem</h2>
+
+    <p>A new category is forming. Call it user-generated software, personal software, vibe-coded apps, or disposable tools. The premise is identical across every entrant: describe what you want, get a functional application.</p>
+
+    <p>The generation layer is converging fast. Prompt-to-app pipelines are becoming a commodity. The differentiators that matter in 2025 (speed, fidelity, native deployment) will be table stakes by 2027.</p>
+
+    <table class="comp-table">
+      <thead>
+        <tr>
+          <th>Platform</th>
+          <th>Source</th>
+          <th>Model</th>
+          <th>Quality Approach</th>
+          <th>Curation</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Wabi</td>
+          <td><a href="https://wabi.ai" target="_blank" rel="noopener noreferrer">wabi.ai</a></td>
+          <td>Social-first UGS, persistent identity ("You OS"), remix culture</td>
+          <td>Publicly emphasizes "golden apps"; no publicly documented systematic curation framework</td>
+          <td>Algorithmic feed, community signals</td>
+        </tr>
+        <tr>
+          <td>Anything</td>
+          <td><a href="https://createanything.com" target="_blank" rel="noopener noreferrer">createanything.com</a></td>
+          <td>Full-stack code generation, native mobile + web, App Store deploy</td>
+          <td>Code quality (linting, error recovery), user reviews on public storefronts</td>
+          <td>"Experts" marketplace, community showcase</td>
+        </tr>
+        <tr>
+          <td>Replit</td>
+          <td><a href="https://replit.com" target="_blank" rel="noopener noreferrer">replit.com</a></td>
+          <td>Developer-adjacent, enterprise controls, SOC2</td>
+          <td>Security screening, code review</td>
+          <td>Featured templates, editorial picks</td>
+        </tr>
+        <tr>
+          <td>Lovable</td>
+          <td><a href="https://lovable.dev" target="_blank" rel="noopener noreferrer">lovable.dev</a></td>
+          <td>Design-forward code generation</td>
+          <td>Output fidelity, component quality</td>
+          <td>Template gallery</td>
+        </tr>
+        <tr>
+          <td>GPT Store</td>
+          <td><a href="https://openai.com/gpt-store" target="_blank" rel="noopener noreferrer">openai.com/gpt-store</a></td>
+          <td>3M+ custom GPTs, conversational interface</td>
+          <td>Policy review, verified builders</td>
+          <td>Leaderboards, categories, editorial</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>Notice the pattern. Every platform has invested heavily in <strong>generation</strong> infrastructure. Based on publicly available positioning, most appear to under-invest in systematic <strong>curation</strong> infrastructure relative to generation. <span class="inference-badge">[Inference]</span> Quality approaches are either loosely defined, ad-hoc, or delegated to community signals.</p>
+
+    <div class="thesis-box">
+      <p><strong>The core thesis:</strong> In user-generated software marketplaces, the generation engine is converging toward commodity. The curation layer, the infrastructure that makes quality legible, discoverable, and trustworthy, is the durable competitive advantage. While elements of curation exist across platforms (editorial picks, reviews, health checks), no platform has yet exposed a coherent, named curation architecture as a first-class product layer. This appears to be a significant gap.</p>
+    </div>
+  </section>
+
+  <!-- ==================== 02 | THE YOUTUBE LESSON ==================== -->
+  <section class="section" id="section-02">
+    <div class="section-number">02 | The YouTube Lesson</div>
+    <h2>Every UGC Platform Replays the Same Quality Arc</h2>
+
+    <p>YouTube in 2006: anyone can upload video. Massive volume. Discovery by views and virality. No quality signals beyond popularity. The platform was exciting and chaotic and largely unusable for anything serious.</p>
+
+    <p>YouTube in 2016: creator monetization, content policies, algorithmic ranking weighted by watch time and satisfaction, trust and safety teams, verified channels, copyright systems. A decade of quality infrastructure investment.</p>
+
+    <p>YouTube in 2025: professional-grade content coexists with amateur uploads. Quality tiers are legible. Creators have incentives to invest in production value. The platform succeeded not because it hosted the most video, but because it built the systems that made quality <strong>discoverable</strong>.</p>
+
+    <div class="case-study">
+      <div class="case-label neutral">Pattern Recognition</div>
+      <h4>The UGC Quality Arc</h4>
+      <p><strong>Phase 1 (Volume):</strong> "Anyone can create." Platform celebrates quantity. Discovery is primitive (recency, popularity). Quality is vibes-based. Early adopters love the chaos.<br/><br/>
+      <strong>Phase 2 (Noise):</strong> Library grows past manual curation capacity. Broken, abandoned, and low-quality entries dominate discovery. New users bounce. Retention drops.<br/><br/>
+      <strong>Phase 3 (Infrastructure):</strong> Platform builds quality signals: ratings, editorial picks, creator incentives, algorithmic quality weighting, trust tiers. Discovery improves. Quality becomes a platform feature, not an accident.<br/><br/>
+      <strong>Phase 4 (Professionalization):</strong> Quality infrastructure enables a creator economy. Top creators invest because the platform rewards quality. The flywheel works.</p>
+    </div>
+
+    <p>Every UGC platform, from YouTube to Etsy to the App Store, has traversed this arc. The ones that invested in quality infrastructure early (Airbnb's trust framework, Spotify's editorial playlists) compressed the timeline.</p>
+  </section>
+
+  <!-- ==================== 03 | LUXURY ==================== -->
+  <section class="section" id="section-03">
+    <div class="section-number">03 | The Luxury Transfer</div>
+    <h2>What Herm&egrave;s Knows That Platforms Don't</h2>
+
+    <p>Luxury brands have solved the curation problem for physical goods across centuries. The methodology is precise, systematic, and transferable. It rests on three principles that map directly to software platform quality.</p>
+
+    <h3>Principle 1: The Golden Sample</h3>
+    <p>In luxury manufacturing, every production run is evaluated against a <strong>golden sample</strong>, a reference artifact that embodies the quality standard. Not a spec document. Not a checklist. A physical object you can hold, examine, and compare against.</p>
+    <p>For user-generated software: the equivalent is a curated set of <strong>reference apps</strong> that define what "excellent" looks like on the platform. Not just featured apps. Architecturally sound, well-designed, maintained, and deeply useful apps that serve as the evaluation benchmark.</p>
+
+    <h3>Principle 2: Separation of Creation and Judgment</h3>
+    <p>At Fendi, the artisan who sews a bag never performs the final quality inspection. At Bentley, the engineer who builds a component is not the person who signs off on the finished vehicle. <strong>The system that generates should never be the system that judges.</strong></p>
+
+    <h3>Principle 3: Quality Tiers Are Legible</h3>
+    <p>You know a Michelin three-star restaurant is different from a one-star. You know a Herm&egrave;s Birkin passed different gates than a department store handbag. The quality difference is <strong>visible and legible</strong> to the consumer before purchase.</p>
+
+    <div class="thesis-box">
+      <p>Luxury brands don't rely on customers to discover quality through trial and error. They invest in <strong>making quality visible</strong> before the customer commits. This is the infrastructure that UGS platforms are missing.</p>
+    </div>
+  </section>
+
+  <!-- ==================== 04 | ARCHITECTURE ==================== -->
+  <section class="section" id="section-04">
+    <div class="section-number">04 | The Architecture</div>
+    <h2>What a Curation Stack Actually Looks Like</h2>
+
+    <p>Enterprise evaluation (as described in <a href="https://mustbesimo.github.io/tasteinfra/" style="color: var(--accent); text-decoration: none;">The Taste Layer</a>) uses binary gates: pass or fail on correctness, safety, and brand compliance. Platform curation is structurally different. It operates on <strong>gradients</strong>, not binary gates, because the goal is ranking and discovery, not rejection.</p>
+
+    <div class="diagram">
+      <div class="diagram-title">The Curation Stack: Layer Architecture</div>
+
+      <div class="flow-row">
+        <div class="flow-box">L1: Functional Integrity</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-box">Does the app work? Load? Handle edge cases?</div>
+      </div>
+
+      <div class="flow-row">
+        <div class="flow-box">L2: Design Quality</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-box">Visual coherence, interaction patterns, responsiveness</div>
+      </div>
+
+      <div class="flow-row">
+        <div class="flow-box">L3: Utility Depth</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-box">Does it solve a real problem? Is it used repeatedly?</div>
+      </div>
+
+      <div class="flow-row">
+        <div class="flow-box accent">L4: Curation Signal</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-box accent">Composite quality score, editorial tier, trust badge</div>
+      </div>
+    </div>
+
+    <table class="comp-table">
+      <thead>
+        <tr>
+          <th>Dimension</th>
+          <th>Enterprise (Taste Layer)</th>
+          <th>Platform (Curation Stack)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Decision type</td>
+          <td>Binary: ship or block</td>
+          <td>Gradient: rank, tier, feature</td>
+        </tr>
+        <tr>
+          <td>Quality owner</td>
+          <td>Internal team (Engineering + Legal + Brand)</td>
+          <td>Platform + creators + community</td>
+        </tr>
+        <tr>
+          <td>Evaluation timing</td>
+          <td>Pre-deployment gate</td>
+          <td>Continuous (creation, discovery, usage, decay)</td>
+        </tr>
+        <tr>
+          <td>Failure mode</td>
+          <td>Hallucination reaches customer</td>
+          <td>Low-quality apps dominate discovery feed</td>
+        </tr>
+        <tr>
+          <td>Economic incentive</td>
+          <td>Liability avoidance</td>
+          <td>Marketplace trust, retention, creator economy</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ==================== 05 | SIGNALS ==================== -->
+  <section class="section" id="section-05">
+    <div class="section-number">05 | The Signals</div>
+    <h2>What Quality Looks Like When Everyone Can Create</h2>
+
+    <p>The traditional software quality hierarchy (code quality, test coverage, performance benchmarks) doesn't transfer cleanly to user-generated software. Most UGS apps have no tests, no CI/CD, no code review. The code is generated and opaque. Quality must be inferred from <strong>observable signals</strong>.</p>
+
+    <div class="tier-grid">
+      <div class="tier-card">
+        <div class="tier-label">Automated (L1-L2)</div>
+        <h4>Functional Signals</h4>
+        <p>Load time, error rate, crash frequency, responsive layout, accessibility score, interaction completeness (do all buttons do something?), data persistence, session handling.</p>
+      </div>
+
+      <div class="tier-card">
+        <div class="tier-label">Behavioral (L3)</div>
+        <h4>Usage Signals</h4>
+        <p>Return rate (used more than once), session depth, task completion, remix count, share rate, time-to-value (how fast does the user get utility?), active days since creation.</p>
+      </div>
+
+      <div class="tier-card">
+        <div class="tier-label">Composite (L4)</div>
+        <h4>Curation Signals</h4>
+        <p>Quality score (weighted composite), editorial selection, creator reputation, category benchmark (best-in-class within type), freshness vs. durability balance.</p>
+      </div>
+    </div>
+
+    <p>The critical insight: <strong>popularity is not quality</strong>. A viral novelty app with 10,000 uses and a 5% return rate is less valuable to the platform than a personal CRM with 200 users and an 80% weekly return rate. Volume-weighted discovery repeats the YouTube 2006 mistake. Quality-weighted discovery builds the YouTube 2025 flywheel.</p>
+
+    <div class="split">
+      <div class="split-card danger">
+        <h4>Volume-Weighted Discovery</h4>
+        <p>Most downloaded → most visible → more downloads. Novelty dominates. Utility dies in the long tail. Quality creators have no incentive to invest. Feed becomes noise. New users see broken apps, bounce, never return.</p>
+      </div>
+      <div class="split-card safe">
+        <h4>Quality-Weighted Discovery</h4>
+        <p>Highest utility → most visible → more sustained usage. Depth rewarded. Creators invest in polish because the platform rewards it. Feed feels curated. New users find useful tools immediately. Retention compounds.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== 06 | THE DECAY PROBLEM ==================== -->
+  <section class="section" id="section-06">
+    <div class="section-number">06 | The Decay Problem</div>
+    <h2>Software Rots. Especially When No One Maintains It.</h2>
+
+    <p>This is the problem that separates user-generated software from user-generated content. A YouTube video from 2012 still plays. A blog post from 2015 still reads. But software decays: APIs change, dependencies break, design patterns age, data schemas drift.</p>
+
+    <p>In a UGS marketplace, apps are created in seconds and abandoned in hours. The platform accumulates <strong>digital debris</strong> at a rate proportional to creation velocity. Without active lifecycle management, the library becomes a graveyard with a fresh coat of paint.</p>
+
+    <div class="case-study">
+      <div class="case-label">The Decay Scenario</div>
+      <h4>Year One of a UGS Platform</h4>
+      <p>Month 1: 1,000 apps created. Most functional. Feed is exciting.<br/>
+      Month 6: 50,000 apps. Dependency drift, API changes, and abandonment begin to degrade the library. Discovery surfaces abandoned apps alongside active ones. User frustration rises.<br/>
+      Month 12: 500,000 apps. A significant percentage are broken or abandoned. The "most popular" feed is dominated by novelty apps with declining utility. Quality apps are buried. Creator motivation drops because effort isn't rewarded. New user experience degrades.<br/><br/>
+      <strong>Without quality infrastructure, creation velocity becomes a liability, not an asset.</strong></p>
+    </div>
+
+    <h3>Lifecycle Signals</h3>
+    <p>A curation stack needs to track app health over time, not just at creation. Signals that matter: last updated, error rate trend (improving or degrading?), creator activity status, dependency health, user-reported issues. Apps should gracefully age out of discovery when they stop working, and resurface when maintained.</p>
+  </section>
+
+  <!-- ==================== 07 | THE MICHELIN MODEL ==================== -->
+  <section class="section" id="section-07">
+    <div class="section-number">07 | The Michelin Model</div>
+    <h2>Quality Tiers as Platform Infrastructure</h2>
+
+    <p>Michelin doesn't rate every restaurant. It rates the ones worth attention, using a consistent, independent, expert-driven framework. This is the model that UGS platforms need.</p>
+
+    <p>A quality tier system for user-generated software creates three platform-level benefits simultaneously: <strong>user trust</strong> (I know what I'm getting), <strong>creator incentive</strong> (investment in quality is rewarded with visibility), and <strong>marketplace efficiency</strong> (discovery surfaces the right apps to the right users).</p>
+
+    <div class="diagram">
+      <div class="diagram-title">Proposed Quality Tier Framework</div>
+
+      <div class="flow-row">
+        <div class="flow-box accent">★★★ Reference</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-box">Golden sample quality. Editorially verified. Maintained. Best-in-category.</div>
+      </div>
+
+      <div class="flow-row">
+        <div class="flow-box accent">★★ Verified</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-box">Functional, designed, actively used. Automated quality gates passed.</div>
+      </div>
+
+      <div class="flow-row">
+        <div class="flow-box accent">★ Community</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-box">Functional. Creator-published. Peer-validated through usage and remix.</div>
+      </div>
+
+      <div class="flow-row">
+        <div class="flow-box accent">Unrated</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-box">New or untested. Available but not featured in discovery.</div>
+      </div>
+    </div>
+
+    <p>The tier system is not gatekeeping. It is <strong>legibility</strong>. Users can still create, share, and use any app. But the discovery layer rewards quality, and the tier badges make quality visible before the user commits time and attention.</p>
+
+    <p>This is also the creator monetization path. In YouTube's model, monetization follows quality signals (subscriber count, watch hours, content policies). In UGS, monetization should follow quality tiers. Reference-tier creators earn from their work. Community-tier creators build reputation toward verified status.</p>
+  </section>
+
+  <!-- ==================== 08 | THE REMIX DIMENSION ==================== -->
+  <section class="section" id="section-08">
+    <div class="section-number">08 | The Remix Dimension</div>
+    <h2>Remix Culture as Quality Signal</h2>
+
+    <p>One feature unique to UGS platforms (especially Wabi) is remix: the ability to fork, modify, and reshare apps. This creates a quality signal that doesn't exist in traditional software or content marketplaces.</p>
+
+    <p><strong>Remix count is a proxy for architectural quality.</strong> An app that gets remixed frequently has a structure worth building on. An app that never gets remixed may be useful but is likely either too niche or too brittle to modify.</p>
+
+    <p>More importantly, remix creates <strong>quality compounding</strong>. Each remix potentially improves the original. The best apps become platforms within the platform, accumulating improvements from the community. This is open-source dynamics applied to personal software.</p>
+
+    <div class="thesis-box">
+      <p>The platforms that treat remix as a quality mechanism (rather than just a social feature) will build compounding quality advantages. Remix genealogy, the ability to trace an app's lineage and identify which versions improved versus degraded quality, is a powerful curation signal that no platform currently tracks.</p>
+    </div>
+  </section>
+
+  <!-- ==================== 09 | THE ANTI-PATTERN ==================== -->
+  <section class="section" id="section-09">
+    <div class="section-number">09 | The Anti-Pattern</div>
+    <h2>Why "Let the Community Decide" Fails</h2>
+
+    <p>The default assumption in platform thinking: quality will emerge organically from community engagement. Upvotes, reviews, usage metrics, and social sharing will surface the best apps naturally.</p>
+
+    <p>This assumption has failed in every UGC marketplace that relied on it exclusively.</p>
+
+    <ul class="styled-list">
+      <li><strong>App Store (2008-2012):</strong> Fart apps dominated discovery. Apple built editorial curation, "Today" features, and review standards.</li>
+      <li><strong>Google Play (2012-2016):</strong> Malware and clones flooded the store. Google invested in Play Protect, automated review, and editorial teams.</li>
+      <li><strong>Etsy (2015-2019):</strong> Resellers and mass-produced goods overwhelmed handmade artisans. Etsy built verification, editorial collections, and algorithmic quality signals.</li>
+      <li><strong>GPT Store (2024-2025):</strong> 3M+ GPTs, minimal curation. Discovery appears largely ineffective for surfacing useful GPTs beyond the top-featured list. <span class="inference-badge">[Inference]</span></li>
+    </ul>
+
+    <p>The failure pattern is consistent: <strong>at scale, volume drowns quality unless the platform actively invests in quality infrastructure</strong>. Community signals are a necessary input to curation, but they are not sufficient. Editorial intelligence, automated quality gates, and tier systems must layer on top.</p>
+
+    <p>The a16z thesis for Wabi explicitly expects "professionalization" to emerge organically, comparing to YouTube's arc. But YouTube's professionalization required a decade of active platform investment in quality systems. The organic part was the creator response to those systems, not the systems themselves.</p>
+  </section>
+
+  <!-- ==================== 10 | GOVERNANCE ==================== -->
+  <section class="section" id="section-10">
+    <div class="section-number">10 | Governance</div>
+    <h2>The Abuse Layer: Quality Is Not Just Curation</h2>
+
+    <p>A curation stack without a governance layer is incomplete architecture. Quality in a UGS marketplace is not only about surfacing good apps. It is also about preventing malicious, deceptive, or harmful ones from reaching users at all.</p>
+
+    <p>When any user can generate software through natural language, the attack surface expands beyond traditional app store threats. The generation layer itself becomes an abuse vector.</p>
+
+    <h3>Platform-Specific Threats</h3>
+
+    <ul class="styled-list">
+      <li><strong>Prompt injection via app generation:</strong> Malicious prompts that embed data exfiltration, credential harvesting, or phishing interfaces into generated apps.</li>
+      <li><strong>Clone spam:</strong> Automated generation of near-identical apps to flood discovery, drown organic apps, and game ranking signals.</li>
+      <li><strong>Impersonation apps:</strong> Apps that mimic established brands, services, or creators to harvest trust or redirect users.</li>
+      <li><strong>Data exfiltration:</strong> Generated apps that request permissions or collect user data beyond their stated function.</li>
+      <li><strong>Adversarial remixing:</strong> Forking a trusted app and injecting harmful modifications that inherit the original's reputation signals.</li>
+    </ul>
+
+    <p>These threats are not hypothetical; every major UGC marketplace at scale has faced analogous attack patterns. The governance layer must operate as an independent system from the curation layer, with distinct ownership, escalation paths, and enforcement mechanisms. Curation answers "is this good?" Governance answers "is this safe?"</p>
+  </section>
+
+  <!-- ==================== 11 | THE OPPORTUNITY ==================== -->
+  <section class="section" id="section-11">
+    <div class="section-number">11 | The Opportunity</div>
+    <h2>The White Space Is Real and Time-Bound</h2>
+
+    <p>Based on publicly available positioning, no major UGS platform appears to have built systematic curation infrastructure as a named product layer. This is not because the problem is invisible. It is because the generation race is consuming all available engineering attention.</p>
+
+    <p>The window is specific: <strong>[Hypothesis]</strong> Between now and the point where library size exceeds manual curation capacity (plausibly within the next 1-2 growth cycles at current creation velocity), the curation architecture decisions will determine which platforms build durable marketplace trust and which drown in their own output.</p>
+
+    <div class="prediction">
+      <div class="prediction-label">Falsifiable Prediction</div>
+      <p>By December 2027, at least one major UGS platform will have a named, public-facing quality tier system (analogous to Michelin stars, App Store editorial picks, or Airbnb Superhost) as a core product feature. The platform that builds it first will have measurably better D30 retention (percentage of new users active 30 days after first session) than competitors without it.</p>
+      <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 12px;">If this doesn't happen, the UGS category may not survive as a distinct product category, because undifferentiated app generation will commoditize into a feature of existing platforms (ChatGPT, Claude, general-purpose AI assistants).</p>
+    </div>
+
+    <h3>What Would Falsify This Thesis</h3>
+    <ul class="styled-list">
+      <li><strong>Generation quality becomes so high that curation is unnecessary.</strong> Every generated app is excellent by default. Possible but unlikely given current model limitations and the subjective nature of "quality" in personal software.</li>
+      <li><strong>Users don't care about quality.</strong> The "disposable software" thesis wins: apps are used once and discarded, so durability and quality don't matter. This would mean UGS platforms compete purely on generation speed.</li>
+      <li><strong>AI-native curation emerges as a commodity.</strong> Foundation model providers ship curation intelligence as a built-in feature, eliminating the need for platform-specific quality infrastructure.</li>
+    </ul>
+  </section>
+
+  <!-- ==================== 12 | THE IMPLEMENTATION ==================== -->
+  <section class="section" id="section-12">
+    <div class="section-number">12 | The Implementation</div>
+    <h2>Minimum Viable Curation Stack</h2>
+
+    <p>For a UGS platform founder reading this on Monday morning, here is the minimum infrastructure that creates a quality advantage.</p>
+
+    <div class="code-block">
+      <span class="comment">// Minimum Viable Curation Stack (MVCS)</span><br/><br/>
+      <span class="key">LAYER 1: Automated Health</span> <span class="comment">// Week 1-2</span><br/>
+      <span class="val">&nbsp;&nbsp;- Load test every app on publish (pass/fail)</span><br/>
+      <span class="val">&nbsp;&nbsp;- Interaction completeness check (buttons, forms, navigation)</span><br/>
+      <span class="val">&nbsp;&nbsp;- Responsive layout verification</span><br/>
+      <span class="val">&nbsp;&nbsp;- Error rate monitoring post-publish</span><br/><br/>
+
+      <span class="key">LAYER 2: Usage Intelligence</span> <span class="comment">// Week 3-4</span><br/>
+      <span class="val">&nbsp;&nbsp;- Return rate tracking (used > 1 time = signal)</span><br/>
+      <span class="val">&nbsp;&nbsp;- Session depth (time spent, actions taken)</span><br/>
+      <span class="val">&nbsp;&nbsp;- Remix genealogy (track forks and improvements)</span><br/>
+      <span class="val">&nbsp;&nbsp;- Decay detection (error rate increase over time)</span><br/><br/>
+
+      <span class="key">LAYER 3: Quality Score</span> <span class="comment">// Week 5-6</span><br/>
+      <span class="val">&nbsp;&nbsp;- Composite score:</span><br/>
+      <span class="val">&nbsp;&nbsp;&nbsp;&nbsp;health_weight * health_signal</span><br/>
+      <span class="val">&nbsp;&nbsp;&nbsp;&nbsp;+ usage_weight * retention_signal</span><br/>
+      <span class="val">&nbsp;&nbsp;&nbsp;&nbsp;+ design_weight * heuristic_score</span><br/>
+      <span class="val">&nbsp;&nbsp;&nbsp;&nbsp;+ freshness_decay_factor</span><br/>
+      <span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;// weights calibrated via A/B retention experiments</span><br/>
+      <span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;// reviewed quarterly against user satisfaction metrics</span><br/>
+      <span class="val">&nbsp;&nbsp;- Quality-weighted discovery feed (replace pure recency/popularity)</span><br/>
+      <span class="val">&nbsp;&nbsp;- Tier badges: Reference / Verified / Community / Unrated</span><br/><br/>
+
+      <span class="key">LAYER 4: Editorial Intelligence</span> <span class="comment">// Week 7-8</span><br/>
+      <span class="val">&nbsp;&nbsp;- Golden sample library (10-20 reference apps per category)</span><br/>
+      <span class="val">&nbsp;&nbsp;- Weekly editorial picks (human judgment on top of algorithmic signals)</span><br/>
+      <span class="val">&nbsp;&nbsp;- Creator reputation score (quality track record across apps)</span><br/>
+      <span class="val">&nbsp;&nbsp;- Category benchmarking (best workout tracker, best CRM, best journal)</span><br/>
+    </div>
+
+    <p>Eight weeks. A small team. The foundation of a curation moat that compounds as the library grows. Every week of delay at current creation velocity adds thousands of uncurated apps to the discovery problem.</p>
+  </section>
+
+  <!-- ==================== 13 | TELEMETRY ==================== -->
+  <section class="section" id="section-13">
+    <div class="section-number">13 | Telemetry</div>
+    <h2>Concrete Signals: What You Actually Measure</h2>
+
+    <p>Abstract quality frameworks are useless without measurable telemetry. These are the signals a curation stack ingests, each mappable to a database column and a dashboard row.</p>
+
+    <div class="code-block">
+      <span class="comment">// Telemetry Schema: Core Curation Signals</span><br/><br/>
+      <span class="key">app_load_success_rate</span>&nbsp;&nbsp;&nbsp;<span class="comment">// % of sessions where app loads without error</span><br/>
+      <span class="key">error_rate_7d_delta</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">// change in error rate over trailing 7 days (decay detection)</span><br/>
+      <span class="key">weekly_return_ratio</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">// users who return within 7 days / total users</span><br/>
+      <span class="key">session_depth_p50</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">// median actions per session (engagement proxy)</span><br/>
+      <span class="key">remix_depth_score</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">// generations of forks from this app (compounding signal)</span><br/>
+      <span class="key">dependency_health_idx</span>&nbsp;<span class="comment">// % of external APIs/integrations still responding</span><br/>
+      <span class="key">creator_maint_freq</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">// days since creator last updated or responded to feedback</span><br/>
+      <span class="key">time_to_value_p50</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">// median seconds from first open to first meaningful action</span><br/>
+      <span class="key">interaction_completeness</span><span class="comment">// % of UI elements that trigger a response when activated</span><br/>
+      <span class="key">curation_score_version</span>&nbsp;<span class="comment">// allows historical re-scoring when weight models update</span><br/>
+    </div>
+
+    <p>Ten signals. Each observable, each automatable, each meaningful in isolation and composite. A platform team could instrument these in a sprint and begin building quality intelligence immediately.</p>
+  </section>
+
+  <!-- ==================== 14 | THE CLAIM ==================== -->
+  <section class="section" id="section-14">
+    <div class="section-number">14 | The Claim</div>
+    <h2>Build the Quality Layer Before You Need It</h2>
+
+    <p>The platforms that build curation infrastructure early are building durable competitive advantages. The ones that wait will spend 10x the resources retroactively sorting through a library that has already trained users to expect noise.</p>
+
+    <p>This is the same lesson luxury brands learned over centuries, compressed into a platform lifecycle. Quality systems don't scale retroactively. They must be architectural, designed into the platform from early days, not bolted on after the feed is already broken.</p>
+
+    <div class="thesis-box">
+      <p>Generation is the cost of entry. Curation is the cost of survival. The platforms that confuse volume for value will not outlast the ones that invest in making quality legible, discoverable, and rewarding for creators.</p>
+    </div>
+
+    <p>The curation problem is not new. It's the same problem Herm&egrave;s, Michelin, YouTube, and Airbnb solved in their respective domains. The tools are different. The principles are identical. Systematic evaluation, independent judgment, legible quality signals, and incentive alignment between platform, creator, and user.</p>
+
+    <p>The question isn't whether UGS platforms will need a curation stack. It's whether they'll build it before the library outgrows their ability to retrofit it.</p>
+  </section>
+
+  <!-- ==================== REFERENCES ==================== -->
+  <section class="section" id="section-refs">
+    <div class="section-number">References</div>
+    <h2>Sources &amp; Further Reading</h2>
+
+    <table class="comp-table">
+      <thead>
+        <tr>
+          <th>Domain</th>
+          <th>Resource</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Wabi</td>
+          <td><a href="https://wabi.ai">wabi.ai</a> | Personal software platform for mini‑apps</td>
+        </tr>
+        <tr>
+          <td>Anything</td>
+          <td><a href="https://www.createanything.com">createanything.com</a> | AI app builder, formerly Create.xyz</td>
+        </tr>
+        <tr>
+          <td>Replit</td>
+          <td><a href="https://replit.com">replit.com</a> | Developer platform with AI generation</td>
+        </tr>
+        <tr>
+          <td>Lovable</td>
+          <td><a href="https://lovable.dev">lovable.dev</a> | Design-forward AI code generation</td>
+        </tr>
+        <tr>
+          <td>GPT Store</td>
+          <td><a href="https://openai.com/index/introducing-the-gpt-store/">openai.com/gpt-store</a> | Custom GPT marketplace</td>
+        </tr>
+        <tr>
+          <td>Wabi Funding</td>
+          <td><a href="https://techcrunch.com/2025/11/05/replika-founder-raises-20m-pre-seed-for-wabi-the-youtube-of-apps/">TechCrunch</a> | "Replika founder raises $20M pre-seed for Wabi" (Nov 2025)</td>
+        </tr>
+        <tr>
+          <td>Anything Funding</td>
+          <td><a href="https://www.producthunt.com/products/anything-2">Product Hunt</a> | Anything launch and community discussion</td>
+        </tr>
+        <tr>
+          <td>Enterprise Evaluation</td>
+          <td><a href="https://mustbesimo.github.io/tasteinfra/">The Taste Layer</a> | Companion manifesto on enterprise AI evaluation</td>
+        </tr>
+        <tr>
+          <td>YouTube Quality Arc</td>
+          <td>Based on publicly documented YouTube Partner Program history and creator monetization policy changes (2007-2025)</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 16px;">
+      Platform assessments in this analysis are based on publicly available positioning, documentation, and press coverage as of February 2026. Internal product roadmaps may differ from public positioning.</p>
+
+    <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 8px;">
+      <strong style="color: var(--text-secondary);">Method:</strong> Evidence sources include platform landing pages, press releases, public API documentation, observed UX behavior, investor announcements, and published user reviews. Claims not directly verifiable from these sources are labeled <span class="inference-badge">[Inference]</span> or <span class="inference-badge">[Hypothesis]</span> throughout.
+    </p>
+  </section>
+
+  </main>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="footer" id="footer">
+    <p>
+      <strong>Simone Leonelli</strong> | AI Systems @ <a href="https://www.harrythehirer.com.au">Harry the Hirer</a>. Guest Lecturer (Spatial Intelligence), <a href="https://www.unsw.edu.au">UNSW</a>.
+    </p>
+    <p>
+      16 years building quality systems for luxury brands (Fendi, Bentley, Porsche). MIT Applied Agentic AI. Stanford Game Theory.
+    </p>
+    <p style="margin-top: 16px; font-size: 0.9rem; color: var(--text-secondary);">
+      I design the quality layer for AI: measurement, ranking, lifecycle health, and guardrails that make outputs usable.
+    </p>
+    <p style="margin-top: 24px;">
+      <a href="https://mustbesimo.github.io/tasteinfra/">The Taste Layer</a> (enterprise evaluation) &nbsp;|&nbsp;
+      <a href="https://www.linkedin.com/in/simoleonelli/">LinkedIn</a> &nbsp;|&nbsp;
+      <a href="https://cal.com/simone-leonelli/20min">Book a call</a>
+    </p>
+    <p style="margin-top: 24px; font-size: 0.75rem; color: var(--text-muted);">
+      Legibility Engineering 002 &nbsp;&middot;&nbsp; February 2026 &nbsp;&middot;&nbsp; v1.0
+    </p>
+    <p style="font-size: 0.75rem; color: var(--text-muted);">
+      This analysis is based on public information, published research, and the author's domain expertise. Platform assessments reflect publicly available positioning as of February 2026.
+    </p>
+  </footer>
+
+  <!-- GSAP Library (loaded before animations) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js" crossorigin="anonymous"></script>
+
+  <!-- ==================== GSAP ANIMATIONS ==================== -->
+  <script>
+    gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+
+    // Progress bar
+    gsap.to('#progressBar', {
+      width: '100%',
+      ease: 'none',
+      scrollTrigger: {
+        trigger: document.body,
+        start: 'top top',
+        end: 'bottom bottom',
+        scrub: 0.3
+      }
+    });
+
+    // Hero animations
+    const heroTl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+
+    heroTl
+      .to('.hero-label', { opacity: 1, y: 0, duration: 0.8 }, 0.2)
+      .to('.hero h1 .line-inner', { y: 0, opacity: 1, duration: 1, stagger: 0.15 }, 0.4)
+      .to('.hero-subtitle', { opacity: 1, y: 0, filter: 'blur(0px)', duration: 1 }, 0.8)
+      .to('.hero-author', { opacity: 1, y: 0, duration: 0.6 }, 1.2)
+      .to('.companion-note', { opacity: 1, x: 0, duration: 0.6 }, 1.4)
+      .to('.hero-meta', { opacity: 1, duration: 0.6 }, 1.6);
+
+    // Section scroll animations
+    const sections = document.querySelectorAll('.section');
+
+    sections.forEach((section) => {
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: section,
+          start: 'top 80%',
+          end: 'top 20%',
+          toggleActions: 'play none none none',
+          onEnter: () => section.classList.add('visible')
+        }
+      });
+
+      tl.to(section, { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' });
+
+      // Animate child elements
+      const paragraphs = section.querySelectorAll('p');
+      const h3s = section.querySelectorAll('h3');
+      const tables = section.querySelectorAll('.comp-table');
+      const diagrams = section.querySelectorAll('.diagram');
+      const caseStudies = section.querySelectorAll('.case-study');
+      const codeBlocks = section.querySelectorAll('.code-block');
+      const thesisBoxes = section.querySelectorAll('.thesis-box');
+      const tierCards = section.querySelectorAll('.tier-card');
+      const splitCards = section.querySelectorAll('.split-card');
+      const predictions = section.querySelectorAll('.prediction');
+      const listItems = section.querySelectorAll('.styled-list li');
+
+      paragraphs.forEach((p, i) => {
+        gsap.fromTo(p,
+          { opacity: 0, y: 20 },
+          { opacity: 1, y: 0, duration: 0.6, delay: 0.1 * i,
+            scrollTrigger: { trigger: p, start: 'top 85%', toggleActions: 'play none none none' }
+          }
+        );
+      });
+
+      h3s.forEach((h3) => {
+        gsap.fromTo(h3,
+          { opacity: 0, y: 20 },
+          { opacity: 1, y: 0, duration: 0.6,
+            scrollTrigger: { trigger: h3, start: 'top 85%', toggleActions: 'play none none none' }
+          }
+        );
+      });
+
+      tables.forEach((table) => {
+        gsap.fromTo(table,
+          { opacity: 0, y: 30 },
+          { opacity: 1, y: 0, duration: 0.8,
+            scrollTrigger: { trigger: table, start: 'top 85%', toggleActions: 'play none none none' }
+          }
+        );
+      });
+
+      diagrams.forEach((diagram) => {
+        gsap.fromTo(diagram,
+          { opacity: 0, y: 30 },
+          { opacity: 1, y: 0, duration: 0.8,
+            scrollTrigger: { trigger: diagram, start: 'top 85%', toggleActions: 'play none none none' }
+          }
+        );
+
+        const flowRows = diagram.querySelectorAll('.flow-row');
+        flowRows.forEach((row, i) => {
+          gsap.fromTo(row,
+            { opacity: 0, x: -20 },
+            { opacity: 1, x: 0, duration: 0.5, delay: 0.15 * i,
+              scrollTrigger: { trigger: diagram, start: 'top 80%', toggleActions: 'play none none none' }
+            }
+          );
+        });
+      });
+
+      caseStudies.forEach((cs) => {
+        gsap.fromTo(cs,
+          { opacity: 0, y: 30 },
+          { opacity: 1, y: 0, duration: 0.8,
+            scrollTrigger: { trigger: cs, start: 'top 85%', toggleActions: 'play none none none' }
+          }
+        );
+      });
+
+      codeBlocks.forEach((cb) => {
+        gsap.fromTo(cb,
+          { opacity: 0, y: 20 },
+          { opacity: 1, y: 0, duration: 0.8,
+            scrollTrigger: {
+              trigger: cb, start: 'top 85%', toggleActions: 'play none none none',
+              onEnter: () => cb.classList.add('visible')
+            }
+          }
+        );
+      });
+
+      thesisBoxes.forEach((tb) => {
+        gsap.fromTo(tb,
+          { opacity: 0, scale: 0.95 },
+          { opacity: 1, scale: 1, duration: 0.8,
+            scrollTrigger: {
+              trigger: tb, start: 'top 85%', toggleActions: 'play none none none',
+              onEnter: () => tb.classList.add('visible')
+            }
+          }
+        );
+      });
+
+      tierCards.forEach((tc, i) => {
+        gsap.fromTo(tc,
+          { opacity: 0, y: 30, rotateX: 10 },
+          { opacity: 1, y: 0, rotateX: 0, duration: 0.6, delay: 0.15 * i,
+            scrollTrigger: { trigger: tc, start: 'top 85%', toggleActions: 'play none none none' }
+          }
+        );
+      });
+
+      splitCards.forEach((sc, i) => {
+        gsap.fromTo(sc,
+          { opacity: 0, y: 30 },
+          { opacity: 1, y: 0, duration: 0.6, delay: 0.15 * i,
+            scrollTrigger: { trigger: sc, start: 'top 85%', toggleActions: 'play none none none' }
+          }
+        );
+      });
+
+      predictions.forEach((pred) => {
+        gsap.fromTo(pred,
+          { opacity: 0, y: 30 },
+          { opacity: 1, y: 0, duration: 0.8,
+            scrollTrigger: { trigger: pred, start: 'top 85%', toggleActions: 'play none none none' }
+          }
+        );
+      });
+
+      listItems.forEach((li, i) => {
+        gsap.fromTo(li,
+          { opacity: 0, x: -20 },
+          { opacity: 1, x: 0, duration: 0.4, delay: 0.1 * i,
+            scrollTrigger: { trigger: li, start: 'top 90%', toggleActions: 'play none none none' }
+          }
+        );
+      });
+    });
+
+    // Footer animation
+    gsap.fromTo('.footer',
+      { opacity: 0, y: 40 },
+      { opacity: 1, y: 0, duration: 0.8,
+        scrollTrigger: { trigger: '.footer', start: 'top 85%', toggleActions: 'play none none none' }
+      }
+    );
+
+    // Navigation dots
+    const navDotsContainer = document.getElementById('navDots');
+    const allSections = document.querySelectorAll('.section');
+    const sectionIds = ['hero'];
+
+    allSections.forEach((s) => {
+      if (s.id) sectionIds.push(s.id);
+    });
+
+    sectionIds.forEach((id, i) => {
+      const dot = document.createElement('div');
+      dot.className = 'nav-dot';
+      dot.dataset.target = id;
+      if (i === 0) dot.classList.add('active');
+
+      dot.setAttribute('tabindex', '0');
+      dot.setAttribute('role', 'button');
+      dot.setAttribute('aria-label', 'Navigate to section ' + (i + 1));
+      dot.addEventListener('click', () => {
+        const target = document.getElementById(id);
+        if (target) {
+          gsap.to(window, { duration: 1, scrollTo: { y: target, offsetY: 40 }, ease: 'power2.inOut' });
+        }
+      });
+
+      dot.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          const target = document.getElementById(id);
+          if (target) {
+            gsap.to(window, { duration: 1, scrollTo: { y: target, offsetY: 40 }, ease: 'power2.inOut' });
+          }
+        }
+      });
+      navDotsContainer.appendChild(dot);
+    });
+
+    // Update active dot on scroll
+    sectionIds.forEach((id, i) => {
+      const el = document.getElementById(id);
+      if (!el) return;
+
+      ScrollTrigger.create({
+        trigger: el,
+        start: 'top center',
+        end: 'bottom center',
+        onEnter: () => updateActiveDot(i),
+        onEnterBack: () => updateActiveDot(i)
+      });
+    });
+
+    function updateActiveDot(index) {
+      const dots = navDotsContainer.querySelectorAll('.nav-dot');
+      dots.forEach((d, i) => {
+        d.classList.toggle('active', i === index);
+      });
+    }
+
+    // Parallax background
+    const parallaxLayer = document.querySelector('.parallax-layer');
+    if (parallaxLayer) {
+      gsap.to(parallaxLayer, {
+        y: '-10%',
+        ease: 'none',
+        scrollTrigger: {
+          trigger: document.body,
+          start: 'top top',
+          end: 'bottom bottom',
+          scrub: true
+        }
+      });
+    }
+  </script>
+
+</body>
+</html>

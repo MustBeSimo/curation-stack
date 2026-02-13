@@ -20,11 +20,19 @@
   <meta name="twitter:description" content="Generation tools are converging. Curation is the moat. What luxury brands, YouTube, and Michelin teach us about quality at platform scale." />
   <meta name="twitter:image" content="https://mustbesimo.github.io/curation-stack/og.jpg" />
   <meta name="twitter:image:alt" content="The Curation Stack - Quality Infrastructure for User-Generated Software" />
+  <meta name="twitter:site" content="@mustbesimo" />
+  <meta name="twitter:creator" content="@mustbesimo" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
   <meta property="article:published_time" content="2026-02-01T00:00:00Z" />
   <meta property="article:modified_time" content="2026-02-13T00:00:00Z" />
+  <meta property="article:author" content="https://www.linkedin.com/in/simoleonelli/" />
+  <meta property="article:tag" content="curation" />
+  <meta property="article:tag" content="marketplaces" />
+  <meta property="article:tag" content="trust-and-safety" />
   <meta name="robots" content="index,follow" />
   <meta name="theme-color" content="#0a0a0a" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' https: data:; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src https://fonts.gstatic.com; script-src 'self' https://cdnjs.cloudflare.com 'sha256-+muphMbjTN/0kD1ocZ6yVix9GaS5asDWPGZjjW32QmU='; connect-src 'self'; base-uri 'self'; frame-ancestors 'none'; upgrade-insecure-requests;" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' https: data:; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; script-src 'self' https://cdnjs.cloudflare.com; connect-src 'self'; base-uri 'self'; frame-ancestors 'none'; upgrade-insecure-requests;" />
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -515,7 +523,7 @@
 
     .comp-table tbody tr:hover {
       background: var(--surface-elevated);
-      transform: translateX(10px);
+      transform: translateX(4px);
     }
 
     .comp-table tbody tr:hover td {
@@ -1235,6 +1243,8 @@
 
     <p>The generation layer is converging fast. Prompt-to-app pipelines are becoming a commodity. The differentiators that matter in 2025 (speed, fidelity, native deployment) will be table stakes by 2027.</p>
 
+    <p style="font-size: 0.85rem; color: var(--text-muted); font-style: italic; margin-bottom: 8px;">Platform comparisons are based on publicly visible surfaces and documentation as of February 2026.</p>
+
     <table class="comp-table">
       <caption style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--text-muted); text-align: left; margin-bottom: 16px; letter-spacing: 0.05em;">Platform Landscape: Product Positioning and Quality Infrastructure</caption>
       <thead>
@@ -1877,251 +1887,7 @@
   <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js" integrity="sha512-LTe6SozZBL8Sg0Z3aIfYJmNWLuqw7czL9fRLMT/eKTQzEqOG8Rk/hwVGQKCz/NqIJGf2xp4kEfEHt3v/XxCJx==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
   <!-- ==================== GSAP ANIMATIONS ==================== -->
-  <script>
-  window.addEventListener('DOMContentLoaded', function() {
-  // Guard: if GSAP fails to load, show all content immediately
-  if (window.gsap && window.ScrollTrigger) {
-    gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
-
-    // Progress bar
-    gsap.to('#progressBar', {
-      width: '100%',
-      ease: 'none',
-      scrollTrigger: {
-        trigger: document.body,
-        start: 'top top',
-        end: 'bottom bottom',
-        scrub: 0.3
-      }
-    });
-
-    // Hero animations
-    const heroTl = gsap.timeline({ defaults: { ease: 'power3.out' } });
-
-    heroTl
-      .to('.hero-label', { opacity: 1, y: 0, duration: 0.8 }, 0.2)
-      .to('.hero h1 .line-inner', { y: 0, opacity: 1, duration: 1, stagger: 0.15 }, 0.4)
-      .to('.hero-subtitle', { opacity: 1, y: 0, filter: 'blur(0px)', duration: 1 }, 0.8)
-      .to('.hero-author', { opacity: 1, y: 0, duration: 0.6 }, 1.2)
-      .to('.companion-note', { opacity: 1, x: 0, duration: 0.6 }, 1.4)
-      .to('.hero-meta', { opacity: 1, duration: 0.6 }, 1.6);
-
-    // Section-level reveal (one trigger per section)
-    gsap.utils.toArray('.section').forEach(function(section) {
-      gsap.fromTo(section,
-        { opacity: 0, y: 40 },
-        { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out',
-          scrollTrigger: {
-            trigger: section,
-            start: 'top 80%',
-            toggleActions: 'play none none none',
-            once: true,
-            onEnter: function() { section.classList.add('visible'); }
-          }
-        }
-      );
-    });
-
-    // Batched child animations (reduces trigger count drastically)
-    ScrollTrigger.batch('.section p, .section h3', {
-      start: 'top 88%',
-      onEnter: function(batch) {
-        gsap.fromTo(batch,
-          { opacity: 0, y: 16 },
-          { opacity: 1, y: 0, duration: 0.5, stagger: 0.06 }
-        );
-      },
-      once: true
-    });
-
-    ScrollTrigger.batch('.styled-list li', {
-      start: 'top 90%',
-      onEnter: function(batch) {
-        gsap.fromTo(batch,
-          { opacity: 0, x: -16 },
-          { opacity: 1, x: 0, duration: 0.4, stagger: 0.06 }
-        );
-      },
-      once: true
-    });
-
-    ScrollTrigger.batch('.tier-card, .split-card', {
-      start: 'top 85%',
-      onEnter: function(batch) {
-        gsap.fromTo(batch,
-          { opacity: 0, y: 24 },
-          { opacity: 1, y: 0, duration: 0.5, stagger: 0.1 }
-        );
-      },
-      once: true
-    });
-
-    // Unique elements: one trigger each (diagrams, code blocks, thesis boxes, etc.)
-    gsap.utils.toArray('.diagram, .case-study, .prediction').forEach(function(el) {
-      gsap.fromTo(el,
-        { opacity: 0, y: 30 },
-        { opacity: 1, y: 0, duration: 0.8,
-          scrollTrigger: { trigger: el, start: 'top 85%', once: true }
-        }
-      );
-    });
-
-    gsap.utils.toArray('.comp-table').forEach(function(table) {
-      gsap.fromTo(table,
-        { opacity: 0, y: 24 },
-        { opacity: 1, y: 0, duration: 0.7,
-          scrollTrigger: { trigger: table, start: 'top 85%', once: true }
-        }
-      );
-    });
-
-    gsap.utils.toArray('.code-block').forEach(function(cb) {
-      gsap.fromTo(cb,
-        { opacity: 0, y: 20 },
-        { opacity: 1, y: 0, duration: 0.8,
-          scrollTrigger: {
-            trigger: cb, start: 'top 85%', once: true,
-            onEnter: function() { cb.classList.add('visible'); }
-          }
-        }
-      );
-    });
-
-    gsap.utils.toArray('.thesis-box').forEach(function(tb) {
-      gsap.fromTo(tb,
-        { opacity: 0, scale: 0.95 },
-        { opacity: 1, scale: 1, duration: 0.8,
-          scrollTrigger: {
-            trigger: tb, start: 'top 85%', once: true,
-            onEnter: function() { tb.classList.add('visible'); }
-          }
-        }
-      );
-    });
-
-    // Flow rows within diagrams (staggered per diagram)
-    gsap.utils.toArray('.diagram').forEach(function(diagram) {
-      var rows = diagram.querySelectorAll('.flow-row');
-      gsap.fromTo(rows,
-        { opacity: 0, x: -16 },
-        { opacity: 1, x: 0, duration: 0.4, stagger: 0.12,
-          scrollTrigger: { trigger: diagram, start: 'top 80%', once: true }
-        }
-      );
-    });
-
-    // Footer animation
-    gsap.fromTo('.footer',
-      { opacity: 0, y: 40 },
-      { opacity: 1, y: 0, duration: 0.8,
-        scrollTrigger: { trigger: '.footer', start: 'top 85%', once: true }
-      }
-    );
-
-    // Navigation dots
-    var navDotsContainer = document.getElementById('navDots');
-    var allSections = document.querySelectorAll('.section');
-    var sectionIds = ['hero'];
-
-    allSections.forEach(function(s) {
-      if (s.id) sectionIds.push(s.id);
-    });
-
-    sectionIds.forEach(function(id, i) {
-      var dot = document.createElement('button');
-      dot.type = 'button';
-      dot.className = 'nav-dot';
-      dot.dataset.target = id;
-      if (i === 0) {
-        dot.classList.add('active');
-        dot.setAttribute('aria-current', 'true');
-      }
-
-      dot.setAttribute('aria-label', 'Navigate to section ' + (i + 1));
-      dot.addEventListener('click', function() {
-        var target = document.getElementById(id);
-        if (target) {
-          gsap.to(window, { duration: 1, scrollTo: { y: target, offsetY: 40 }, ease: 'power2.inOut' });
-        }
-      });
-      navDotsContainer.appendChild(dot);
-    });
-
-    // Update active dot on scroll
-    sectionIds.forEach(function(id, i) {
-      var el = document.getElementById(id);
-      if (!el) return;
-
-      ScrollTrigger.create({
-        trigger: el,
-        start: 'top center',
-        end: 'bottom center',
-        onEnter: function() { updateActiveDot(i); },
-        onEnterBack: function() { updateActiveDot(i); }
-      });
-    });
-
-    function updateActiveDot(index) {
-      var dots = navDotsContainer.querySelectorAll('.nav-dot');
-      dots.forEach(function(d, i) {
-        var isActive = i === index;
-        d.classList.toggle('active', isActive);
-        if (isActive) {
-          d.setAttribute('aria-current', 'true');
-        } else {
-          d.removeAttribute('aria-current');
-        }
-      });
-    }
-
-    // Parallax background
-    var parallaxLayer = document.querySelector('.parallax-layer');
-    if (parallaxLayer) {
-      gsap.to(parallaxLayer, {
-        y: '-10%',
-        ease: 'none',
-        scrollTrigger: {
-          trigger: document.body,
-          start: 'top top',
-          end: 'bottom bottom',
-          scrub: true
-        }
-      });
-    }
-
-  } else {
-    // GSAP failed to load: make everything visible immediately
-    document.querySelectorAll('.hero-label,.hero-subtitle,.hero-author,.companion-note,.hero-meta,.section,.footer')
-      .forEach(function(el) {
-        el.style.opacity = '1';
-        el.style.transform = 'none';
-        el.style.filter = 'none';
-      });
-    document.querySelectorAll('.hero h1 .line-inner')
-      .forEach(function(el) {
-        el.style.opacity = '1';
-        el.style.transform = 'none';
-      });
-    // Create static nav dots without GSAP scroll-to
-    var navDotsContainer = document.getElementById('navDots');
-    var staticSections = document.querySelectorAll('.section');
-    var staticIds = ['hero'];
-    staticSections.forEach(function(s) { if (s.id) staticIds.push(s.id); });
-    staticIds.forEach(function(id, i) {
-      var dot = document.createElement('button');
-      dot.type = 'button';
-      dot.className = 'nav-dot';
-      if (i === 0) dot.classList.add('active');
-      dot.setAttribute('aria-label', 'Navigate to section ' + (i + 1));
-      dot.addEventListener('click', function() {
-        var target = document.getElementById(id);
-        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      });
-      navDotsContainer.appendChild(dot);
-    });
-  }
-  }); // end DOMContentLoaded
-  </script>
+  <script defer src="./app.js"></script>
 
 </body>
 </html>

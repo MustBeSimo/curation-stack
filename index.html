@@ -12,20 +12,72 @@
   <link rel="canonical" href="https://mustbesimo.github.io/curation-stack/" />
   <meta property="og:url" content="https://mustbesimo.github.io/curation-stack/" />
   <meta property="og:image" content="https://mustbesimo.github.io/curation-stack/og.jpg" />
+  <meta property="og:image:alt" content="The Curation Stack - Quality Infrastructure for User-Generated Software" />
   <meta property="og:site_name" content="Legibility Engineering" />
   <meta property="og:locale" content="en_US" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="The Curation Stack | Quality Infrastructure for User-Generated Software" />
   <meta name="twitter:description" content="Generation tools are converging. Curation is the moat. What luxury brands, YouTube, and Michelin teach us about quality at platform scale." />
   <meta name="twitter:image" content="https://mustbesimo.github.io/curation-stack/og.jpg" />
+  <meta name="twitter:image:alt" content="The Curation Stack - Quality Infrastructure for User-Generated Software" />
+  <meta property="article:published_time" content="2026-02-01T00:00:00Z" />
+  <meta property="article:modified_time" content="2026-02-13T00:00:00Z" />
+  <meta name="robots" content="index,follow" />
+  <meta name="theme-color" content="#0a0a0a" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' https: data:; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src https://fonts.gstatic.com; script-src 'self' https://cdnjs.cloudflare.com 'sha256-+muphMbjTN/0kD1ocZ6yVix9GaS5asDWPGZjjW32QmU='; connect-src 'self'; base-uri 'self'; frame-ancestors 'none'; upgrade-insecure-requests;" />
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 
-  
-  
+  <!-- JSON-LD Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "The Curation Stack | Quality Infrastructure for User-Generated Software",
+    "description": "Generation tools are converging. Curation is the moat. What luxury brands, YouTube, and Michelin teach us about quality at platform scale.",
+    "image": ["https://mustbesimo.github.io/curation-stack/og.jpg"],
+    "inLanguage": "en-US",
+    "keywords": ["curation", "UGS", "marketplaces", "quality infrastructure", "ranking systems", "trust and safety"],
+    "articleSection": ["Platforms", "AI", "Marketplaces", "Governance"],
+    "author": {
+      "@type": "Person",
+      "name": "Simone Leonelli",
+      "url": "https://www.linkedin.com/in/simoleonelli/"
+    },
+    "datePublished": "2026-02-01",
+    "dateModified": "2026-02-13",
+    "publisher": {
+      "@type": "Organization",
+      "name": "Legibility Engineering",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://mustbesimo.github.io/curation-stack/logo.png"
+      }
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://mustbesimo.github.io/curation-stack/"
+    }
+  }
+  </script>
+
+  <!-- No-JS Fallback -->
+  <noscript>
+    <style>
+      .hero-label, .hero-subtitle, .hero-author, .companion-note, .hero-meta, .section {
+        opacity: 1 !important;
+        transform: none !important;
+        filter: none !important;
+      }
+      .hero h1 .line-inner {
+        opacity: 1 !important;
+        transform: none !important;
+      }
+    </style>
+  </noscript>
 
   <style>
     :root {
@@ -35,8 +87,8 @@
       --border: #222222;
       --border-accent: #2a2a2a;
       --text-primary: #e8e8e8;
-      --text-secondary: #999999;
-      --text-muted: #777777;
+      --text-secondary: #a5a5a5;
+      --text-muted: #888888;
       --accent: #c4a265;
       --accent-dim: #8a7245;
       --accent-bright: #d4b275;
@@ -1007,6 +1059,10 @@
       transform: translate(-50%, -50%) scale(1);
     }
 
+    .nav-dot[aria-current="true"] {
+      background: var(--accent);
+    }
+
     @media (max-width: 1024px) {
       .nav-dots { display: none; }
     }
@@ -1050,6 +1106,12 @@
         transition-duration: 0.01ms !important;
         scroll-behavior: auto !important;
       }
+      .noise-overlay {
+        display: none;
+      }
+      .hero-shape {
+        animation: none !important;
+      }
     }
     /* Inference/Hypothesis badges */
     .inference-badge {
@@ -1059,21 +1121,56 @@
       letter-spacing: 0.05em;
       opacity: 0.8;
       margin-left: 4px;
+      cursor: help;
+      text-decoration: underline dotted var(--accent-dim);
+      text-underline-offset: 2px;
+    }
+
+    /* Skip Link */
+    .skip-link {
+      position: absolute;
+      left: -999px;
+      top: 16px;
+      background: var(--surface);
+      color: var(--text-primary);
+      padding: 10px 14px;
+      border: 1px solid var(--border);
+      z-index: 10000;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      text-decoration: none;
+    }
+    .skip-link:focus {
+      left: 16px;
+    }
+
+    /* Nav dots as buttons */
+    button.nav-dot {
+      border: none;
+      padding: 0;
+      font: inherit;
+      background: var(--border-accent);
+      cursor: pointer;
+      -webkit-appearance: none;
+      appearance: none;
     }
 
     /* Focus styles for accessibility */
-    a:focus-visible, .nav-dot:focus-visible {
+    a:focus-visible, button.nav-dot:focus-visible {
       outline: 2px solid var(--accent);
       outline-offset: 3px;
       border-radius: 2px;
     }
 
-    .nav-dot:focus-visible {
+    button.nav-dot:focus-visible {
       border-radius: 50%;
     }
   </style>
 </head>
 <body>
+
+  <!-- Skip Link -->
+  <a class="skip-link" href="#section-01">Skip to content</a>
 
   <!-- Progress Bar -->
   <div class="progress-bar" id="progressBar"></div>
@@ -1128,22 +1225,25 @@
   <main role="main">
 
   <!-- ==================== 01 | THE CONVERGENCE ==================== -->
-  <section class="section" id="section-01">
+  <section class="section" id="section-01" aria-labelledby="h-section-01">
     <div class="section-number">01 | The Convergence</div>
-    <h2>Every Generation Tool Arrives at the Same Problem</h2>
+    <h2 id="h-section-01">Every Generation Tool Arrives at the Same Problem</h2>
 
-    <p>A new category is forming. Call it user-generated software, personal software, vibe-coded apps, or disposable tools. The premise is identical across every entrant: describe what you want, get a functional application.</p>
+    <p>A new category is forming: <strong>user-generated software (UGS)</strong>. Natural language to runnable apps, published into a shared catalog where discovery, ranking, and reuse are product primitives. The moment you add a marketplace feed, you inherit curation as an infrastructure problem.</p>
+
+    <p>UGS is distinct from internal one-off scripts, private automations without discovery, or traditional open-source repositories. It combines creation democratization with platform-mediated distribution.</p>
 
     <p>The generation layer is converging fast. Prompt-to-app pipelines are becoming a commodity. The differentiators that matter in 2025 (speed, fidelity, native deployment) will be table stakes by 2027.</p>
 
     <table class="comp-table">
+      <caption style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--text-muted); text-align: left; margin-bottom: 16px; letter-spacing: 0.05em;">Platform Landscape: Product Positioning and Quality Infrastructure</caption>
       <thead>
         <tr>
-          <th>Platform</th>
-          <th>Source</th>
-          <th>Model</th>
-          <th>Quality Approach</th>
-          <th>Curation</th>
+          <th scope="col">Platform</th>
+          <th scope="col">Source</th>
+          <th scope="col">Product Shape</th>
+          <th scope="col">Quality Controls (Publicly Documented)</th>
+          <th scope="col">Curation Primitives</th>
         </tr>
       </thead>
       <tbody>
@@ -1151,55 +1251,55 @@
           <td>Wabi</td>
           <td><a href="https://wabi.ai" target="_blank" rel="noopener noreferrer">wabi.ai</a></td>
           <td>Social-first UGS, persistent identity ("You OS"), remix culture</td>
-          <td>Publicly emphasizes "golden apps"; no publicly documented systematic curation framework</td>
+          <td>Publicly emphasizes "golden apps"; systematic curation framework not documented in public materials <abbr title="Derived from multiple evidence points, not explicitly stated by platform" class="inference-badge">[Inference]</abbr></td>
           <td>Algorithmic feed, community signals</td>
         </tr>
         <tr>
           <td>Anything</td>
-          <td><a href="https://createanything.com" target="_blank" rel="noopener noreferrer">createanything.com</a></td>
+          <td><a href="https://www.createanything.com" target="_blank" rel="noopener noreferrer">createanything.com</a></td>
           <td>Full-stack code generation, native mobile + web, App Store deploy</td>
-          <td>Code quality (linting, error recovery), user reviews on public storefronts</td>
+          <td>Code quality tooling (linting, error recovery mentioned in product materials); user reviews on deployed apps</td>
           <td>"Experts" marketplace, community showcase</td>
         </tr>
         <tr>
           <td>Replit</td>
           <td><a href="https://replit.com" target="_blank" rel="noopener noreferrer">replit.com</a></td>
-          <td>Developer-adjacent, enterprise controls, SOC2</td>
-          <td>Security screening, code review</td>
+          <td>Developer-adjacent platform, enterprise controls, SOC2 compliance</td>
+          <td>Security screening, code review infrastructure (documented in enterprise tier)</td>
           <td>Featured templates, editorial picks</td>
         </tr>
         <tr>
           <td>Lovable</td>
           <td><a href="https://lovable.dev" target="_blank" rel="noopener noreferrer">lovable.dev</a></td>
-          <td>Design-forward code generation</td>
-          <td>Output fidelity, component quality</td>
-          <td>Template gallery</td>
+          <td>Design-forward code generation, visual quality emphasis</td>
+          <td>Output fidelity focus, component quality <abbr title="Derived from multiple evidence points, not explicitly stated by platform" class="inference-badge">[Inference]</abbr></td>
+          <td>Template gallery, curated examples</td>
         </tr>
         <tr>
           <td>GPT Store</td>
-          <td><a href="https://openai.com/gpt-store" target="_blank" rel="noopener noreferrer">openai.com/gpt-store</a></td>
-          <td>3M+ custom GPTs, conversational interface</td>
-          <td>Policy review, verified builders</td>
-          <td>Leaderboards, categories, editorial</td>
+          <td><a href="https://openai.com/index/introducing-the-gpt-store/" target="_blank" rel="noopener noreferrer">openai.com/gpt-store</a></td>
+          <td>Large catalog of custom GPTs (<a href="https://openai.com/index/introducing-the-gpt-store/" target="_blank" rel="noopener noreferrer" style="font-size: 0.8rem;">announced Jan 2024</a>), conversational interface, no-code creation</td>
+          <td>Policy review (documented), verified builder program (public)</td>
+          <td>Leaderboards, categories, editorial featuring</td>
         </tr>
       </tbody>
     </table>
 
-    <p>Notice the pattern. Every platform has invested heavily in <strong>generation</strong> infrastructure. Based on publicly available positioning, most appear to under-invest in systematic <strong>curation</strong> infrastructure relative to generation. <span class="inference-badge">[Inference]</span> Quality approaches are either loosely defined, ad-hoc, or delegated to community signals.</p>
+    <p>Notice the pattern. Every platform has invested heavily in <strong>generation</strong> infrastructure. Public positioning emphasizes generation over curation. <abbr title="Derived from multiple evidence points, not explicitly stated by platform" class="inference-badge">[Inference]</abbr> Quality approaches, where documented, tend to be narrowly scoped (policy compliance, security screening) rather than systematic quality infrastructure across discovery and lifecycle.</p>
 
     <div class="thesis-box">
-      <p><strong>The core thesis:</strong> In user-generated software marketplaces, the generation engine is converging toward commodity. The curation layer, the infrastructure that makes quality legible, discoverable, and trustworthy, is the durable competitive advantage. While elements of curation exist across platforms (editorial picks, reviews, health checks), no platform has yet exposed a coherent, named curation architecture as a first-class product layer. This appears to be a significant gap.</p>
+      <p><strong>The core thesis:</strong> In user-generated software marketplaces, the generation engine is converging toward commodity. The curation layer, the infrastructure that makes quality legible, discoverable, and trustworthy, is the durable competitive advantage. While elements of curation exist across platforms (editorial picks, reviews, health checks), no platform appears to publicly present a coherent, end-to-end curation architecture as a named product layer. <abbr title="Derived from multiple evidence points, not explicitly stated by platform" class="inference-badge">[Inference]</abbr> This appears to be a significant gap.</p>
     </div>
   </section>
 
   <!-- ==================== 02 | THE YOUTUBE LESSON ==================== -->
-  <section class="section" id="section-02">
+  <section class="section" id="section-02" aria-labelledby="h-section-02">
     <div class="section-number">02 | The YouTube Lesson</div>
-    <h2>Every UGC Platform Replays the Same Quality Arc</h2>
+    <h2 id="h-section-02">Every UGC Platform Replays the Same Quality Arc</h2>
 
     <p>YouTube in 2006: anyone can upload video. Massive volume. Discovery by views and virality. No quality signals beyond popularity. The platform was exciting and chaotic and largely unusable for anything serious.</p>
 
-    <p>YouTube in 2016: creator monetization, content policies, algorithmic ranking weighted by watch time and satisfaction, trust and safety teams, verified channels, copyright systems. A decade of quality infrastructure investment.</p>
+    <p>YouTube in 2016: creator monetization, content policies, algorithmic ranking weighted by watch time and satisfaction, trust and safety teams, verified channels, copyright systems. A decade of quality infrastructure investment. <a href="https://support.google.com/youtube/answer/72851" target="_blank" rel="noopener noreferrer" style="color: var(--accent); font-size: 0.85rem; text-decoration: none; border-bottom: 1px dotted var(--accent-dim);">[YouTube Partner Program History]</a></p>
 
     <p>YouTube in 2025: professional-grade content coexists with amateur uploads. Quality tiers are legible. Creators have incentives to invest in production value. The platform succeeded not because it hosted the most video, but because it built the systems that made quality <strong>discoverable</strong>.</p>
 
@@ -1216,9 +1316,9 @@
   </section>
 
   <!-- ==================== 03 | LUXURY ==================== -->
-  <section class="section" id="section-03">
+  <section class="section" id="section-03" aria-labelledby="h-section-03">
     <div class="section-number">03 | The Luxury Transfer</div>
-    <h2>What Herm&egrave;s Knows That Platforms Don't</h2>
+    <h2 id="h-section-03">What Herm&egrave;s Knows That Platforms Don't</h2>
 
     <p>Luxury brands have solved the curation problem for physical goods across centuries. The methodology is precise, systematic, and transferable. It rests on three principles that map directly to software platform quality.</p>
 
@@ -1238,14 +1338,20 @@
   </section>
 
   <!-- ==================== 04 | ARCHITECTURE ==================== -->
-  <section class="section" id="section-04">
+  <section class="section" id="section-04" aria-labelledby="h-section-04">
     <div class="section-number">04 | The Architecture</div>
-    <h2>What a Curation Stack Actually Looks Like</h2>
+    <h2 id="h-section-04">What a Curation Stack Actually Looks Like</h2>
 
     <p>Enterprise evaluation (as described in <a href="https://mustbesimo.github.io/tasteinfra/" style="color: var(--accent); text-decoration: none;">The Taste Layer</a>) uses binary gates: pass or fail on correctness, safety, and brand compliance. Platform curation is structurally different. It operates on <strong>gradients</strong>, not binary gates, because the goal is ranking and discovery, not rejection.</p>
 
     <div class="diagram">
       <div class="diagram-title">The Curation Stack: Layer Architecture</div>
+
+      <div class="flow-row">
+        <div class="flow-box">L0: Identity & Provenance</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-box">Creator trust tier, app lineage, permission manifest</div>
+      </div>
 
       <div class="flow-row">
         <div class="flow-box">L1: Functional Integrity</div>
@@ -1272,12 +1378,15 @@
       </div>
     </div>
 
+    <p style="margin-top: 32px; font-size: 0.95rem; color: var(--text-secondary);"><strong>L0 is marketplace-native infrastructure.</strong> In UGS platforms, provenance isn't decorative: it enables governance (whose app is this?), trust transfer (verified creator badges), and fork safety (did this remix degrade or improve quality?).</p>
+
     <table class="comp-table">
+      <caption style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--text-muted); text-align: left; margin-bottom: 16px; letter-spacing: 0.05em;">Architecture Comparison: Enterprise vs Platform Quality Systems</caption>
       <thead>
         <tr>
-          <th>Dimension</th>
-          <th>Enterprise (Taste Layer)</th>
-          <th>Platform (Curation Stack)</th>
+          <th scope="col">Dimension</th>
+          <th scope="col">Enterprise (Taste Layer)</th>
+          <th scope="col">Platform (Curation Stack)</th>
         </tr>
       </thead>
       <tbody>
@@ -1311,11 +1420,13 @@
   </section>
 
   <!-- ==================== 05 | SIGNALS ==================== -->
-  <section class="section" id="section-05">
+  <section class="section" id="section-05" aria-labelledby="h-section-05">
     <div class="section-number">05 | The Signals</div>
-    <h2>What Quality Looks Like When Everyone Can Create</h2>
+    <h2 id="h-section-05">What Quality Looks Like When Everyone Can Create</h2>
 
     <p>The traditional software quality hierarchy (code quality, test coverage, performance benchmarks) doesn't transfer cleanly to user-generated software. Most UGS apps have no tests, no CI/CD, no code review. The code is generated and opaque. Quality must be inferred from <strong>observable signals</strong>.</p>
+
+    <p style="background: var(--surface); border-left: 2px solid var(--accent-dim); padding: 16px 20px; margin: 24px 0; font-size: 0.95rem;"><strong>Discovery is a multi-objective ranking function:</strong> quality, freshness, personalization, and safety. The goal is not to block creation, it is to allocate attention under scarcity.</p>
 
     <div class="tier-grid">
       <div class="tier-card">
@@ -1352,9 +1463,9 @@
   </section>
 
   <!-- ==================== 06 | THE DECAY PROBLEM ==================== -->
-  <section class="section" id="section-06">
+  <section class="section" id="section-06" aria-labelledby="h-section-06">
     <div class="section-number">06 | The Decay Problem</div>
-    <h2>Software Rots. Especially When No One Maintains It.</h2>
+    <h2 id="h-section-06">Software Rots. Especially When No One Maintains It.</h2>
 
     <p>This is the problem that separates user-generated software from user-generated content. A YouTube video from 2012 still plays. A blog post from 2015 still reads. But software decays: APIs change, dependencies break, design patterns age, data schemas drift.</p>
 
@@ -1374,9 +1485,9 @@
   </section>
 
   <!-- ==================== 07 | THE MICHELIN MODEL ==================== -->
-  <section class="section" id="section-07">
+  <section class="section" id="section-07" aria-labelledby="h-section-07">
     <div class="section-number">07 | The Michelin Model</div>
-    <h2>Quality Tiers as Platform Infrastructure</h2>
+    <h2 id="h-section-07">Quality Tiers as Platform Infrastructure</h2>
 
     <p>Michelin doesn't rate every restaurant. It rates the ones worth attention, using a consistent, independent, expert-driven framework. This is the model that UGS platforms need.</p>
 
@@ -1416,9 +1527,9 @@
   </section>
 
   <!-- ==================== 08 | THE REMIX DIMENSION ==================== -->
-  <section class="section" id="section-08">
+  <section class="section" id="section-08" aria-labelledby="h-section-08">
     <div class="section-number">08 | The Remix Dimension</div>
-    <h2>Remix Culture as Quality Signal</h2>
+    <h2 id="h-section-08">Remix Culture as Quality Signal</h2>
 
     <p>One feature unique to UGS platforms (especially Wabi) is remix: the ability to fork, modify, and reshare apps. This creates a quality signal that doesn't exist in traditional software or content marketplaces.</p>
 
@@ -1432,9 +1543,9 @@
   </section>
 
   <!-- ==================== 09 | THE ANTI-PATTERN ==================== -->
-  <section class="section" id="section-09">
+  <section class="section" id="section-09" aria-labelledby="h-section-09">
     <div class="section-number">09 | The Anti-Pattern</div>
-    <h2>Why "Let the Community Decide" Fails</h2>
+    <h2 id="h-section-09">Why "Let the Community Decide" Fails</h2>
 
     <p>The default assumption in platform thinking: quality will emerge organically from community engagement. Upvotes, reviews, usage metrics, and social sharing will surface the best apps naturally.</p>
 
@@ -1444,18 +1555,71 @@
       <li><strong>App Store (2008-2012):</strong> Fart apps dominated discovery. Apple built editorial curation, "Today" features, and review standards.</li>
       <li><strong>Google Play (2012-2016):</strong> Malware and clones flooded the store. Google invested in Play Protect, automated review, and editorial teams.</li>
       <li><strong>Etsy (2015-2019):</strong> Resellers and mass-produced goods overwhelmed handmade artisans. Etsy built verification, editorial collections, and algorithmic quality signals.</li>
-      <li><strong>GPT Store (2024-2025):</strong> 3M+ GPTs, minimal curation. Discovery appears largely ineffective for surfacing useful GPTs beyond the top-featured list. <span class="inference-badge">[Inference]</span></li>
+      <li><strong>GPT Store (2024-2025):</strong> Large catalog of custom GPTs, minimal systematic curation infrastructure observable in public product surfaces. Non-featured items have low visibility without direct search. <abbr title="Derived from observed product UX behavior, not explicitly stated" class="inference-badge">[Inference]</abbr></li>
     </ul>
 
     <p>The failure pattern is consistent: <strong>at scale, volume drowns quality unless the platform actively invests in quality infrastructure</strong>. Community signals are a necessary input to curation, but they are not sufficient. Editorial intelligence, automated quality gates, and tier systems must layer on top.</p>
 
-    <p>The a16z thesis for Wabi explicitly expects "professionalization" to emerge organically, comparing to YouTube's arc. But YouTube's professionalization required a decade of active platform investment in quality systems. The organic part was the creator response to those systems, not the systems themselves.</p>
+    <h3>Common Discovery Failure Modes</h3>
+    <p>When curation is under-resourced relative to creation velocity, predictable pathologies emerge:</p>
+
+    <table class="comp-table" style="margin-top: 32px;">
+      <caption style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--text-muted); text-align: left; margin-bottom: 16px; letter-spacing: 0.05em;">Discovery Failure Modes and Mitigation Strategies</caption>
+      <thead>
+        <tr>
+          <th scope="col">Failure Mode</th>
+          <th scope="col">Root Cause</th>
+          <th scope="col">Observable Signal</th>
+          <th scope="col">Mitigation Primitive</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Broken apps dominate feed</td>
+          <td>No health gating at publish or decay detection</td>
+          <td>Load failure rate, crash rate trending up</td>
+          <td>Publish-time health checks, downrank on failure</td>
+        </tr>
+        <tr>
+          <td>Novelty beats utility</td>
+          <td>Popularity proxy (views, upvotes) over depth</td>
+          <td>Low weekly_return_ratio despite high creation volume</td>
+          <td>Quality-weighted ranking, return-rate boosting</td>
+        </tr>
+        <tr>
+          <td>Clone spam floods categories</td>
+          <td>Cheap generation, no uniqueness filter</td>
+          <td>High near-duplicate rate, keyword stuffing</td>
+          <td>Similarity detection, rate limits, trust tier gating</td>
+        </tr>
+        <tr>
+          <td>Rating inflation / Sybil attacks</td>
+          <td>Unverified upvotes, botted engagement</td>
+          <td>Spiky engagement patterns, low session depth</td>
+          <td>Verified user weighting, behavioral fraud detection</td>
+        </tr>
+        <tr>
+          <td>Badge laundering via forks</td>
+          <td>Reputation inheritance on remix</td>
+          <td>High abuse reports on forked verified apps</td>
+          <td>Badge doesn't transfer, fork must re-qualify</td>
+        </tr>
+        <tr>
+          <td>App rots trust</td>
+          <td>Dependency drift, no maintenance incentive</td>
+          <td>error_rate_7d_delta trending up, abandonment</td>
+          <td>Decay downrank, maintenance rewards</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p style="margin-top: 32px;">The a16z thesis for Wabi explicitly expects "professionalization" to emerge organically, comparing to YouTube's arc. But YouTube's professionalization required a decade of active platform investment in quality systems. The organic part was the creator response to those systems, not the systems themselves.</p>
   </section>
 
   <!-- ==================== 10 | GOVERNANCE ==================== -->
-  <section class="section" id="section-10">
+  <section class="section" id="section-10" aria-labelledby="h-section-10">
     <div class="section-number">10 | Governance</div>
-    <h2>The Abuse Layer: Quality Is Not Just Curation</h2>
+    <h2 id="h-section-10">The Abuse Layer: Quality Is Not Just Curation</h2>
 
     <p>A curation stack without a governance layer is incomplete architecture. Quality in a UGS marketplace is not only about surfacing good apps. It is also about preventing malicious, deceptive, or harmful ones from reaching users at all.</p>
 
@@ -1475,13 +1639,13 @@
   </section>
 
   <!-- ==================== 11 | THE OPPORTUNITY ==================== -->
-  <section class="section" id="section-11">
+  <section class="section" id="section-11" aria-labelledby="h-section-11">
     <div class="section-number">11 | The Opportunity</div>
-    <h2>The White Space Is Real and Time-Bound</h2>
+    <h2 id="h-section-11">The White Space Is Real and Time-Bound</h2>
 
-    <p>Based on publicly available positioning, no major UGS platform appears to have built systematic curation infrastructure as a named product layer. This is not because the problem is invisible. It is because the generation race is consuming all available engineering attention.</p>
+    <p>Based on publicly available positioning (checked public docs, marketing surfaces, and product UX as of Feb 2026), no major UGS platform appears to publicly present systematic curation infrastructure as a named product layer. <abbr title="Derived from multiple evidence points, not explicitly stated by platform" class="inference-badge">[Inference]</abbr> This is not because the problem is invisible. It is because the generation race is consuming all available engineering attention.</p>
 
-    <p>The window is specific: <strong>[Hypothesis]</strong> Between now and the point where library size exceeds manual curation capacity (plausibly within the next 1-2 growth cycles at current creation velocity), the curation architecture decisions will determine which platforms build durable marketplace trust and which drown in their own output.</p>
+    <p>The window is specific: <abbr title="Forward-looking claim, not yet validated" class="inference-badge">[Hypothesis]</abbr> Between now and the point where library size exceeds manual curation capacity (plausibly within the next 1-2 growth cycles at current creation velocity), the curation architecture decisions will determine which platforms build durable marketplace trust and which drown in their own output.</p>
 
     <div class="prediction">
       <div class="prediction-label">Falsifiable Prediction</div>
@@ -1498,9 +1662,9 @@
   </section>
 
   <!-- ==================== 12 | THE IMPLEMENTATION ==================== -->
-  <section class="section" id="section-12">
+  <section class="section" id="section-12" aria-labelledby="h-section-12">
     <div class="section-number">12 | The Implementation</div>
-    <h2>Minimum Viable Curation Stack</h2>
+    <h2 id="h-section-12">Minimum Viable Curation Stack</h2>
 
     <p>For a UGS platform founder reading this on Monday morning, here is the minimum infrastructure that creates a quality advantage.</p>
 
@@ -1540,9 +1704,9 @@
   </section>
 
   <!-- ==================== 13 | TELEMETRY ==================== -->
-  <section class="section" id="section-13">
+  <section class="section" id="section-13" aria-labelledby="h-section-13">
     <div class="section-number">13 | Telemetry</div>
-    <h2>Concrete Signals: What You Actually Measure</h2>
+    <h2 id="h-section-13">Concrete Signals: What You Actually Measure</h2>
 
     <p>Abstract quality frameworks are useless without measurable telemetry. These are the signals a curation stack ingests, each mappable to a database column and a dashboard row.</p>
 
@@ -1564,9 +1728,9 @@
   </section>
 
   <!-- ==================== 14 | THE CLAIM ==================== -->
-  <section class="section" id="section-14">
+  <section class="section" id="section-14" aria-labelledby="h-section-14">
     <div class="section-number">14 | The Claim</div>
-    <h2>Build the Quality Layer Before You Need It</h2>
+    <h2 id="h-section-14">Build the Quality Layer Before You Need It</h2>
 
     <p>The platforms that build curation infrastructure early are building durable competitive advantages. The ones that wait will spend 10x the resources retroactively sorting through a library that has already trained users to expect noise.</p>
 
@@ -1582,62 +1746,103 @@
   </section>
 
   <!-- ==================== REFERENCES ==================== -->
-  <section class="section" id="section-refs">
+  <section class="section" id="section-refs" aria-labelledby="h-section-refs">
     <div class="section-number">References</div>
-    <h2>Sources &amp; Further Reading</h2>
+    <h2 id="h-section-refs">Sources &amp; Further Reading</h2>
 
+    <h3 style="font-size: 1.1rem; margin-top: 32px; margin-bottom: 16px; color: var(--accent-dim);">Primary Sources (Platform Pages &amp; Documentation)</h3>
     <table class="comp-table">
       <thead>
         <tr>
-          <th>Domain</th>
-          <th>Resource</th>
+          <th scope="col">Platform</th>
+          <th scope="col">Resource</th>
         </tr>
       </thead>
       <tbody>
         <tr>
           <td>Wabi</td>
-          <td><a href="https://wabi.ai">wabi.ai</a> | Personal software platform for mini‑apps</td>
+          <td><a href="https://wabi.ai" target="_blank" rel="noopener noreferrer">wabi.ai</a> | Personal software platform for mini‑apps</td>
         </tr>
         <tr>
           <td>Anything</td>
-          <td><a href="https://www.createanything.com">createanything.com</a> | AI app builder, formerly Create.xyz</td>
+          <td><a href="https://www.createanything.com" target="_blank" rel="noopener noreferrer">createanything.com</a> | AI app builder, formerly Create.xyz</td>
         </tr>
         <tr>
           <td>Replit</td>
-          <td><a href="https://replit.com">replit.com</a> | Developer platform with AI generation</td>
+          <td><a href="https://replit.com" target="_blank" rel="noopener noreferrer">replit.com</a> | Developer platform with AI generation</td>
         </tr>
         <tr>
           <td>Lovable</td>
-          <td><a href="https://lovable.dev">lovable.dev</a> | Design-forward AI code generation</td>
+          <td><a href="https://lovable.dev" target="_blank" rel="noopener noreferrer">lovable.dev</a> | Design-forward AI code generation</td>
         </tr>
         <tr>
           <td>GPT Store</td>
-          <td><a href="https://openai.com/index/introducing-the-gpt-store/">openai.com/gpt-store</a> | Custom GPT marketplace</td>
-        </tr>
-        <tr>
-          <td>Wabi Funding</td>
-          <td><a href="https://techcrunch.com/2025/11/05/replika-founder-raises-20m-pre-seed-for-wabi-the-youtube-of-apps/">TechCrunch</a> | "Replika founder raises $20M pre-seed for Wabi" (Nov 2025)</td>
-        </tr>
-        <tr>
-          <td>Anything Funding</td>
-          <td><a href="https://www.producthunt.com/products/anything-2">Product Hunt</a> | Anything launch and community discussion</td>
-        </tr>
-        <tr>
-          <td>Enterprise Evaluation</td>
-          <td><a href="https://mustbesimo.github.io/tasteinfra/">The Taste Layer</a> | Companion manifesto on enterprise AI evaluation</td>
-        </tr>
-        <tr>
-          <td>YouTube Quality Arc</td>
-          <td>Based on publicly documented YouTube Partner Program history and creator monetization policy changes (2007-2025)</td>
+          <td><a href="https://openai.com/index/introducing-the-gpt-store/" target="_blank" rel="noopener noreferrer">openai.com/gpt-store</a> | Custom GPT marketplace announcement</td>
         </tr>
       </tbody>
     </table>
 
-    <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 16px;">
-      Platform assessments in this analysis are based on publicly available positioning, documentation, and press coverage as of February 2026. Internal product roadmaps may differ from public positioning.</p>
+    <h3 style="font-size: 1.1rem; margin-top: 48px; margin-bottom: 16px; color: var(--accent-dim);">Secondary Sources (Press &amp; Commentary)</h3>
+    <table class="comp-table">
+      <thead>
+        <tr>
+          <th scope="col">Topic</th>
+          <th scope="col">Resource</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Wabi Funding</td>
+          <td><a href="https://techcrunch.com/2025/11/05/replika-founder-raises-20m-pre-seed-for-wabi-the-youtube-of-apps/" target="_blank" rel="noopener noreferrer">TechCrunch</a> | "Replika founder raises $20M pre-seed for Wabi" (Nov 2025)</td>
+        </tr>
+        <tr>
+          <td>Anything Community</td>
+          <td><a href="https://www.producthunt.com/products/anything-2" target="_blank" rel="noopener noreferrer">Product Hunt</a> | Anything launch and community discussion</td>
+        </tr>
+      </tbody>
+    </table>
 
-    <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 8px;">
-      <strong style="color: var(--text-secondary);">Method:</strong> Evidence sources include platform landing pages, press releases, public API documentation, observed UX behavior, investor announcements, and published user reviews. Claims not directly verifiable from these sources are labeled <span class="inference-badge">[Inference]</span> or <span class="inference-badge">[Hypothesis]</span> throughout.
+    <h3 style="font-size: 1.1rem; margin-top: 48px; margin-bottom: 16px; color: var(--accent-dim);">Analog References (Quality System Precedents)</h3>
+    <table class="comp-table">
+      <thead>
+        <tr>
+          <th scope="col">Domain</th>
+          <th scope="col">Resource</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Enterprise Evaluation</td>
+          <td><a href="https://mustbesimo.github.io/tasteinfra/" target="_blank" rel="noopener noreferrer">The Taste Layer</a> | Companion manifesto on enterprise AI evaluation infrastructure</td>
+        </tr>
+        <tr>
+          <td>YouTube Quality Arc</td>
+          <td>Based on publicly documented YouTube Partner Program history, Creator monetization policy changes (2007-2025), and <a href="https://support.google.com/youtube/answer/72851" target="_blank" rel="noopener noreferrer">YouTube Partner Program official documentation</a></td>
+        </tr>
+        <tr>
+          <td>Michelin Guide</td>
+          <td>Quality tier methodology synthesized from public Michelin Guide methodology descriptions and restaurant industry analysis</td>
+        </tr>
+        <tr>
+          <td>Luxury Manufacturing</td>
+          <td>Golden sample methodology derived from author's 16 years in luxury brand quality systems (Fendi, Bentley, Porsche)</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 style="font-size: 1.1rem; margin-top: 48px; margin-bottom: 16px; color: var(--accent-dim);">Evidence Label Legend</h3>
+    <div style="background: var(--surface); border: 1px solid var(--border); padding: 24px; margin-top: 16px;">
+      <p style="margin-bottom: 16px; font-size: 0.95rem;"><strong style="color: var(--accent);">[Evidence]</strong> – Directly supported by linked public documentation, product UI, press coverage, or official platform materials.</p>
+      <p style="margin-bottom: 16px; font-size: 0.95rem;"><strong style="color: var(--accent);">[Inference]</strong> – Derived from multiple evidence points, observed product behavior, or publicly available positioning. Not explicitly stated by the platform but reasonably concluded from available information.</p>
+      <p style="margin-bottom: 16px; font-size: 0.95rem;"><strong style="color: var(--accent);">[Hypothesis]</strong> – Forward-looking claim, prediction, or proposed framework not yet validated. Presented as testable thesis.</p>
+      <p style="margin-bottom: 0; font-size: 0.95rem;"><strong style="color: var(--accent);">[Unverified]</strong> – Specific data point (e.g., a number or date) that cannot be confirmed from a stable, citable source. Included for directional context only.</p>
+    </div>
+
+    <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 32px;">
+      <strong style="color: var(--text-secondary);">Platform assessments:</strong> Based on publicly available positioning, documentation, and press coverage as of February 2026. Internal product roadmaps may differ from public positioning. All comparative claims are labeled with evidence type to maintain analytical transparency.</p>
+
+    <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 16px;">
+      <strong style="color: var(--text-secondary);">Research method:</strong> Evidence sources include platform landing pages, press releases, public API documentation, observed UX behavior (as of Feb 2026), investor announcements, published user reviews, and publicly documented policy frameworks. Claims not directly verifiable from these sources are explicitly labeled <abbr title="Derived from multiple evidence points, not explicitly stated by platform" class="inference-badge">[Inference]</abbr> or <abbr title="Forward-looking claim, not yet validated" class="inference-badge">[Hypothesis]</abbr> throughout the document.
     </p>
   </section>
 
@@ -1646,18 +1851,17 @@
   <!-- ==================== FOOTER ==================== -->
   <footer class="footer" id="footer">
     <p>
-      <strong>Simone Leonelli</strong> | AI Systems @ <a href="https://www.harrythehirer.com.au">Harry the Hirer</a>. Guest Lecturer (Spatial Intelligence), <a href="https://www.unsw.edu.au">UNSW</a>.
+      <strong>Simone Leonelli</strong> | AI Systems @ <a href="https://www.harrythehirer.com.au" target="_blank" rel="noopener noreferrer">Harry the Hirer</a>. Guest Lecturer (Spatial Intelligence), <a href="https://www.unsw.edu.au" target="_blank" rel="noopener noreferrer">UNSW</a>.
     </p>
     <p>
       16 years building quality systems for luxury brands (Fendi, Bentley, Porsche). MIT Applied Agentic AI. Stanford Game Theory.
     </p>
     <p style="margin-top: 16px; font-size: 0.9rem; color: var(--text-secondary);">
-      I design the quality layer for AI: measurement, ranking, lifecycle health, and guardrails that make outputs usable.
-    </p>
+      I build curation systems for AI marketplaces: quality signals, ranking, tiering, and governance.    </p>
     <p style="margin-top: 24px;">
-      <a href="https://mustbesimo.github.io/tasteinfra/">The Taste Layer</a> (enterprise evaluation) &nbsp;|&nbsp;
-      <a href="https://www.linkedin.com/in/simoleonelli/">LinkedIn</a> &nbsp;|&nbsp;
-      <a href="https://cal.com/simone-leonelli/20min">Book a call</a>
+      <a href="https://mustbesimo.github.io/tasteinfra/" target="_blank" rel="noopener noreferrer">The Taste Layer</a> (enterprise evaluation) &nbsp;|&nbsp;
+      <a href="https://www.linkedin.com/in/simoleonelli/" target="_blank" rel="noopener noreferrer">LinkedIn</a> &nbsp;|&nbsp;
+      <a href="https://cal.com/simone-leonelli/20min" target="_blank" rel="noopener noreferrer">Book a call</a>
     </p>
     <p style="margin-top: 24px; font-size: 0.75rem; color: var(--text-muted);">
       Legibility Engineering 002 &nbsp;&middot;&nbsp; February 2026 &nbsp;&middot;&nbsp; v1.0
@@ -1667,13 +1871,16 @@
     </p>
   </footer>
 
-  <!-- GSAP Library (loaded before animations) -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js" crossorigin="anonymous"></script>
+  <!-- GSAP Library (loaded with SRI + defer for non-blocking) -->
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" integrity="sha512-16esztaSRplJROstbIIdwX3N97V1+pZvV33ABoG1H2OyTttBxEGkTsoIVsiP1iaTtM8b3+hu2kB6pQ4Clr5yug==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" integrity="sha512-Ic9xkERjyZ1xgJ5svx3y0u3xrvfT/uPkV99LBwe68xjy/mGtO+4eURHZBW2xW4SZbFrF1Tf090XqB+EVgXnVjw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js" integrity="sha512-LTe6SozZBL8Sg0Z3aIfYJmNWLuqw7czL9fRLMT/eKTQzEqOG8Rk/hwVGQKCz/NqIJGf2xp4kEfEHt3v/XxCJx==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
   <!-- ==================== GSAP ANIMATIONS ==================== -->
   <script>
+  window.addEventListener('DOMContentLoaded', function() {
+  // Guard: if GSAP fails to load, show all content immediately
+  if (window.gsap && window.ScrollTrigger) {
     gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
     // Progress bar
@@ -1699,219 +1906,176 @@
       .to('.companion-note', { opacity: 1, x: 0, duration: 0.6 }, 1.4)
       .to('.hero-meta', { opacity: 1, duration: 0.6 }, 1.6);
 
-    // Section scroll animations
-    const sections = document.querySelectorAll('.section');
-
-    sections.forEach((section) => {
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: section,
-          start: 'top 80%',
-          end: 'top 20%',
-          toggleActions: 'play none none none',
-          onEnter: () => section.classList.add('visible')
+    // Section-level reveal (one trigger per section)
+    gsap.utils.toArray('.section').forEach(function(section) {
+      gsap.fromTo(section,
+        { opacity: 0, y: 40 },
+        { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out',
+          scrollTrigger: {
+            trigger: section,
+            start: 'top 80%',
+            toggleActions: 'play none none none',
+            once: true,
+            onEnter: function() { section.classList.add('visible'); }
+          }
         }
-      });
+      );
+    });
 
-      tl.to(section, { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' });
-
-      // Animate child elements
-      const paragraphs = section.querySelectorAll('p');
-      const h3s = section.querySelectorAll('h3');
-      const tables = section.querySelectorAll('.comp-table');
-      const diagrams = section.querySelectorAll('.diagram');
-      const caseStudies = section.querySelectorAll('.case-study');
-      const codeBlocks = section.querySelectorAll('.code-block');
-      const thesisBoxes = section.querySelectorAll('.thesis-box');
-      const tierCards = section.querySelectorAll('.tier-card');
-      const splitCards = section.querySelectorAll('.split-card');
-      const predictions = section.querySelectorAll('.prediction');
-      const listItems = section.querySelectorAll('.styled-list li');
-
-      paragraphs.forEach((p, i) => {
-        gsap.fromTo(p,
-          { opacity: 0, y: 20 },
-          { opacity: 1, y: 0, duration: 0.6, delay: 0.1 * i,
-            scrollTrigger: { trigger: p, start: 'top 85%', toggleActions: 'play none none none' }
-          }
+    // Batched child animations (reduces trigger count drastically)
+    ScrollTrigger.batch('.section p, .section h3', {
+      start: 'top 88%',
+      onEnter: function(batch) {
+        gsap.fromTo(batch,
+          { opacity: 0, y: 16 },
+          { opacity: 1, y: 0, duration: 0.5, stagger: 0.06 }
         );
-      });
+      },
+      once: true
+    });
 
-      h3s.forEach((h3) => {
-        gsap.fromTo(h3,
-          { opacity: 0, y: 20 },
-          { opacity: 1, y: 0, duration: 0.6,
-            scrollTrigger: { trigger: h3, start: 'top 85%', toggleActions: 'play none none none' }
-          }
+    ScrollTrigger.batch('.styled-list li', {
+      start: 'top 90%',
+      onEnter: function(batch) {
+        gsap.fromTo(batch,
+          { opacity: 0, x: -16 },
+          { opacity: 1, x: 0, duration: 0.4, stagger: 0.06 }
         );
-      });
+      },
+      once: true
+    });
 
-      tables.forEach((table) => {
-        gsap.fromTo(table,
-          { opacity: 0, y: 30 },
-          { opacity: 1, y: 0, duration: 0.8,
-            scrollTrigger: { trigger: table, start: 'top 85%', toggleActions: 'play none none none' }
-          }
+    ScrollTrigger.batch('.tier-card, .split-card', {
+      start: 'top 85%',
+      onEnter: function(batch) {
+        gsap.fromTo(batch,
+          { opacity: 0, y: 24 },
+          { opacity: 1, y: 0, duration: 0.5, stagger: 0.1 }
         );
-      });
+      },
+      once: true
+    });
 
-      diagrams.forEach((diagram) => {
-        gsap.fromTo(diagram,
-          { opacity: 0, y: 30 },
-          { opacity: 1, y: 0, duration: 0.8,
-            scrollTrigger: { trigger: diagram, start: 'top 85%', toggleActions: 'play none none none' }
+    // Unique elements: one trigger each (diagrams, code blocks, thesis boxes, etc.)
+    gsap.utils.toArray('.diagram, .case-study, .prediction').forEach(function(el) {
+      gsap.fromTo(el,
+        { opacity: 0, y: 30 },
+        { opacity: 1, y: 0, duration: 0.8,
+          scrollTrigger: { trigger: el, start: 'top 85%', once: true }
+        }
+      );
+    });
+
+    gsap.utils.toArray('.comp-table').forEach(function(table) {
+      gsap.fromTo(table,
+        { opacity: 0, y: 24 },
+        { opacity: 1, y: 0, duration: 0.7,
+          scrollTrigger: { trigger: table, start: 'top 85%', once: true }
+        }
+      );
+    });
+
+    gsap.utils.toArray('.code-block').forEach(function(cb) {
+      gsap.fromTo(cb,
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.8,
+          scrollTrigger: {
+            trigger: cb, start: 'top 85%', once: true,
+            onEnter: function() { cb.classList.add('visible'); }
           }
-        );
+        }
+      );
+    });
 
-        const flowRows = diagram.querySelectorAll('.flow-row');
-        flowRows.forEach((row, i) => {
-          gsap.fromTo(row,
-            { opacity: 0, x: -20 },
-            { opacity: 1, x: 0, duration: 0.5, delay: 0.15 * i,
-              scrollTrigger: { trigger: diagram, start: 'top 80%', toggleActions: 'play none none none' }
-            }
-          );
-        });
-      });
-
-      caseStudies.forEach((cs) => {
-        gsap.fromTo(cs,
-          { opacity: 0, y: 30 },
-          { opacity: 1, y: 0, duration: 0.8,
-            scrollTrigger: { trigger: cs, start: 'top 85%', toggleActions: 'play none none none' }
+    gsap.utils.toArray('.thesis-box').forEach(function(tb) {
+      gsap.fromTo(tb,
+        { opacity: 0, scale: 0.95 },
+        { opacity: 1, scale: 1, duration: 0.8,
+          scrollTrigger: {
+            trigger: tb, start: 'top 85%', once: true,
+            onEnter: function() { tb.classList.add('visible'); }
           }
-        );
-      });
+        }
+      );
+    });
 
-      codeBlocks.forEach((cb) => {
-        gsap.fromTo(cb,
-          { opacity: 0, y: 20 },
-          { opacity: 1, y: 0, duration: 0.8,
-            scrollTrigger: {
-              trigger: cb, start: 'top 85%', toggleActions: 'play none none none',
-              onEnter: () => cb.classList.add('visible')
-            }
-          }
-        );
-      });
-
-      thesisBoxes.forEach((tb) => {
-        gsap.fromTo(tb,
-          { opacity: 0, scale: 0.95 },
-          { opacity: 1, scale: 1, duration: 0.8,
-            scrollTrigger: {
-              trigger: tb, start: 'top 85%', toggleActions: 'play none none none',
-              onEnter: () => tb.classList.add('visible')
-            }
-          }
-        );
-      });
-
-      tierCards.forEach((tc, i) => {
-        gsap.fromTo(tc,
-          { opacity: 0, y: 30, rotateX: 10 },
-          { opacity: 1, y: 0, rotateX: 0, duration: 0.6, delay: 0.15 * i,
-            scrollTrigger: { trigger: tc, start: 'top 85%', toggleActions: 'play none none none' }
-          }
-        );
-      });
-
-      splitCards.forEach((sc, i) => {
-        gsap.fromTo(sc,
-          { opacity: 0, y: 30 },
-          { opacity: 1, y: 0, duration: 0.6, delay: 0.15 * i,
-            scrollTrigger: { trigger: sc, start: 'top 85%', toggleActions: 'play none none none' }
-          }
-        );
-      });
-
-      predictions.forEach((pred) => {
-        gsap.fromTo(pred,
-          { opacity: 0, y: 30 },
-          { opacity: 1, y: 0, duration: 0.8,
-            scrollTrigger: { trigger: pred, start: 'top 85%', toggleActions: 'play none none none' }
-          }
-        );
-      });
-
-      listItems.forEach((li, i) => {
-        gsap.fromTo(li,
-          { opacity: 0, x: -20 },
-          { opacity: 1, x: 0, duration: 0.4, delay: 0.1 * i,
-            scrollTrigger: { trigger: li, start: 'top 90%', toggleActions: 'play none none none' }
-          }
-        );
-      });
+    // Flow rows within diagrams (staggered per diagram)
+    gsap.utils.toArray('.diagram').forEach(function(diagram) {
+      var rows = diagram.querySelectorAll('.flow-row');
+      gsap.fromTo(rows,
+        { opacity: 0, x: -16 },
+        { opacity: 1, x: 0, duration: 0.4, stagger: 0.12,
+          scrollTrigger: { trigger: diagram, start: 'top 80%', once: true }
+        }
+      );
     });
 
     // Footer animation
     gsap.fromTo('.footer',
       { opacity: 0, y: 40 },
       { opacity: 1, y: 0, duration: 0.8,
-        scrollTrigger: { trigger: '.footer', start: 'top 85%', toggleActions: 'play none none none' }
+        scrollTrigger: { trigger: '.footer', start: 'top 85%', once: true }
       }
     );
 
     // Navigation dots
-    const navDotsContainer = document.getElementById('navDots');
-    const allSections = document.querySelectorAll('.section');
-    const sectionIds = ['hero'];
+    var navDotsContainer = document.getElementById('navDots');
+    var allSections = document.querySelectorAll('.section');
+    var sectionIds = ['hero'];
 
-    allSections.forEach((s) => {
+    allSections.forEach(function(s) {
       if (s.id) sectionIds.push(s.id);
     });
 
-    sectionIds.forEach((id, i) => {
-      const dot = document.createElement('div');
+    sectionIds.forEach(function(id, i) {
+      var dot = document.createElement('button');
+      dot.type = 'button';
       dot.className = 'nav-dot';
       dot.dataset.target = id;
-      if (i === 0) dot.classList.add('active');
+      if (i === 0) {
+        dot.classList.add('active');
+        dot.setAttribute('aria-current', 'true');
+      }
 
-      dot.setAttribute('tabindex', '0');
-      dot.setAttribute('role', 'button');
       dot.setAttribute('aria-label', 'Navigate to section ' + (i + 1));
-      dot.addEventListener('click', () => {
-        const target = document.getElementById(id);
+      dot.addEventListener('click', function() {
+        var target = document.getElementById(id);
         if (target) {
           gsap.to(window, { duration: 1, scrollTo: { y: target, offsetY: 40 }, ease: 'power2.inOut' });
-        }
-      });
-
-      dot.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          const target = document.getElementById(id);
-          if (target) {
-            gsap.to(window, { duration: 1, scrollTo: { y: target, offsetY: 40 }, ease: 'power2.inOut' });
-          }
         }
       });
       navDotsContainer.appendChild(dot);
     });
 
     // Update active dot on scroll
-    sectionIds.forEach((id, i) => {
-      const el = document.getElementById(id);
+    sectionIds.forEach(function(id, i) {
+      var el = document.getElementById(id);
       if (!el) return;
 
       ScrollTrigger.create({
         trigger: el,
         start: 'top center',
         end: 'bottom center',
-        onEnter: () => updateActiveDot(i),
-        onEnterBack: () => updateActiveDot(i)
+        onEnter: function() { updateActiveDot(i); },
+        onEnterBack: function() { updateActiveDot(i); }
       });
     });
 
     function updateActiveDot(index) {
-      const dots = navDotsContainer.querySelectorAll('.nav-dot');
-      dots.forEach((d, i) => {
-        d.classList.toggle('active', i === index);
+      var dots = navDotsContainer.querySelectorAll('.nav-dot');
+      dots.forEach(function(d, i) {
+        var isActive = i === index;
+        d.classList.toggle('active', isActive);
+        if (isActive) {
+          d.setAttribute('aria-current', 'true');
+        } else {
+          d.removeAttribute('aria-current');
+        }
       });
     }
 
     // Parallax background
-    const parallaxLayer = document.querySelector('.parallax-layer');
+    var parallaxLayer = document.querySelector('.parallax-layer');
     if (parallaxLayer) {
       gsap.to(parallaxLayer, {
         y: '-10%',
@@ -1924,6 +2088,39 @@
         }
       });
     }
+
+  } else {
+    // GSAP failed to load: make everything visible immediately
+    document.querySelectorAll('.hero-label,.hero-subtitle,.hero-author,.companion-note,.hero-meta,.section,.footer')
+      .forEach(function(el) {
+        el.style.opacity = '1';
+        el.style.transform = 'none';
+        el.style.filter = 'none';
+      });
+    document.querySelectorAll('.hero h1 .line-inner')
+      .forEach(function(el) {
+        el.style.opacity = '1';
+        el.style.transform = 'none';
+      });
+    // Create static nav dots without GSAP scroll-to
+    var navDotsContainer = document.getElementById('navDots');
+    var staticSections = document.querySelectorAll('.section');
+    var staticIds = ['hero'];
+    staticSections.forEach(function(s) { if (s.id) staticIds.push(s.id); });
+    staticIds.forEach(function(id, i) {
+      var dot = document.createElement('button');
+      dot.type = 'button';
+      dot.className = 'nav-dot';
+      if (i === 0) dot.classList.add('active');
+      dot.setAttribute('aria-label', 'Navigate to section ' + (i + 1));
+      dot.addEventListener('click', function() {
+        var target = document.getElementById(id);
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+      navDotsContainer.appendChild(dot);
+    });
+  }
+  }); // end DOMContentLoaded
   </script>
 
 </body>
